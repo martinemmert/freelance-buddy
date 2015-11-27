@@ -1,0 +1,19 @@
+{
+  "name": "freelance-buddy",
+  "description": "a Sails application",
+  "main": "app.js",
+  "authors": [
+    "martinemmert"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/martinemmert/freelance-buddy",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "lodash": "~3.10.1",
+    "angular": "~1.4.8"
+  }
+}
