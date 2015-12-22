@@ -25,12 +25,20 @@ var cssFilesToInject = [
 var jsFilesToInject = [
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
-  'bower_components/jquery/dist/jquery.min.js',
-  'bower_components/lodash/lodash.min.js',
-  'bower_components/angular/angular.min.js',
-  'js/app/app.module.js',
-  'js/app/app.config.js',
-  'js/app/app.run.js'
+  'bower_components/jquery/dist/jquery.js',
+  'bower_components/lodash/lodash.js',
+  'bower_components/angular/angular.js',
+  'bower_components/angular-route/angular-route.min.js',
+  'bower_components/angular-messages/angular-messages.min.js',
+  'js/**/!(app).module.js',                                             // import all module definitions
+  'js/**/!(app).module.config.js',                                      // import all provider configs
+  'js/**/!(app).module.run.js',                                         // import all runtime configs
+  'js/**/!(app).class!(\.spec|\.run|\.config).js',                      // import all custom classes
+  'js/**/!(app).@(directive|factory|service|controller|provider).js',   // import all providers
+  // import the application root module
+  'js/**/app.module.js',
+  'js/**/app.module.config.js',
+  'js/**/app.module.run.js'
 ];
 
 
@@ -48,7 +56,6 @@ var templateFilesToInject = [
 ];
 
 
-
 // Prefix relative paths to source files so they point to the proper locations
 // (i.e. where the other Grunt tasks spit them out, or in some cases, where
 // they reside in the first place)
@@ -59,5 +66,5 @@ module.exports.templateFilesToInject = templateFilesToInject.map(transformPath);
 // Transform paths relative to the "assets" folder to be relative to the public
 // folder, preserving "exclude" operators.
 function transformPath(path) {
-  return (path.substring(0,1) == '!') ? ('!' + tmpPath + path.substring(1)) : (tmpPath + path);
+  return (path.substring(0, 1) == '!') ? ('!' + tmpPath + path.substring(1)) : (tmpPath + path);
 }
