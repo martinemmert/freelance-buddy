@@ -1,0 +1,43 @@
+<h1>Freelance Buddy</h1>
+<h2>Customers</h2>
+<div ng-controller="app.customers.controller as vm">
+  <customer-form data-customer-model="vm.selectedModel"></customer-form>
+  <ul ng-if="vm.customersCollection.length > 0">
+    <li ng-repeat="customer in vm.customersCollection">
+      {{customer.labelText}}
+      <input type="button" value="Edit" ng-click="vm.selectModel(customer)">
+      <input type="button" value="Delete" ng-click="customer.$delete()">
+    </li>
+  </ul>
+  <div ng-if="!vm.customersCollectionLoaded">
+    loading ...
+  </div>
+</div>
+<h3>Projects</h3>
+<div ng-controller="app.projects.controller as vm">
+  <project-form data-project-model="vm.selectedModel"></project-form>
+  <ul ng-if="vm.projectCollection.length > 0">
+    <li ng-repeat="project in vm.projectCollection track by project.tracker">
+      {{project.customer.name}} - {{project.title}} - {{project.projectNumber}} - {{project.tracker}}
+      <input type="button" value="Edit" ng-click="vm.selectModel(project)">
+      <input type="button" value="Delete" ng-click="project.$delete()">
+    </li>
+  </ul>
+  <div ng-if="!vm.projectCollectionLoaded">
+    loading ...
+  </div>
+</div>
+<h3>Subprojects</h3>
+<div ng-controller="app.subprojects.controller as vm">
+  <subproject-form data-subproject-model="vm.selectedModel"></subproject-form>
+  <ul ng-if="vm.subprojectCollection.length > 0">
+    <li ng-repeat="subproject in vm.subprojectCollection">
+      {{subproject.project.title}} - {{subproject.title}} - {{subproject.projectNumber}}
+      <input type="button" value="Edit" ng-click="vm.selectModel(subproject)">
+      <input type="button" value="Delete" ng-click="subproject.$delete()">
+    </li>
+  </ul>
+  <div ng-if="!vm.subprojectCollectionLoaded">
+    loading ...
+  </div>
+</div>

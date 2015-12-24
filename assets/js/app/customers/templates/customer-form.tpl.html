@@ -1,0 +1,18 @@
+<form name="vm.form" ng-submit="vm.save()">
+  <fieldset>
+    <legend>Customer Form</legend>
+    <div ng-if="vm.customerModel">
+      <label for="customer-form-abbreviation">Abbreviation:</label>
+      <input type="text" name="abbreviation" id="customer-form-abbreviation" ng-model="vm.formData.abbreviation" ng-required="true" ng-minlength="3" ng-maxlength="3" maxlength="3">
+
+      <label for="customer-form-name">Name:</label>
+      <input type="text" name="name" id="customer-form-name" ng-model="vm.formData.name" ng-required="true">
+
+      <input type="submit" value="Save" ng-disabled="vm.form.$invalid"/>
+      <input type="button" value="Cancel" ng-click="vm.cancel()"/>
+    </div>
+    <div ng-if="!vm.customerModel">
+      <input type="button" value="New" ng-click="vm.create()"/>
+    </div>
+  </fieldset>
+</form>

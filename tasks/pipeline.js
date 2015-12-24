@@ -24,21 +24,29 @@ var cssFilesToInject = [
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
   // Load sails.io before everything else
-  'js/dependencies/sails.io.js',
+  //'js/dependencies/sails.io.js',
   'bower_components/jquery/dist/jquery.js',
   'bower_components/lodash/lodash.js',
+  'bower_components/js-signals/dist/signals.js',
   'bower_components/angular/angular.js',
-  'bower_components/angular-route/angular-route.min.js',
-  'bower_components/angular-messages/angular-messages.min.js',
-  'js/**/!(app).module.js',                                             // import all module definitions
-  'js/**/!(app).module.config.js',                                      // import all provider configs
-  'js/**/!(app).module.run.js',                                         // import all runtime configs
-  'js/**/!(app).class!(\.spec|\.run|\.config).js',                      // import all custom classes
-  'js/**/!(app).@(directive|factory|service|controller|provider).js',   // import all providers
+  'bower_components/angular-route/angular-route.js',
+  'bower_components/angular-messages/angular-messages.js',
+  'bower_components/angular-resource/angular-resource.js',
+  'js/extensions/me-angular-classes/me-angular-classes.module.js',
+  'js/extensions/me-angular-classes/class.provider.js',
+  'js/extensions/me-angular-models/me-angular-models.module.js',
+  'js/extensions/me-angular-models/model.provider.js',
+  'js/extensions/me-angular-models/collection.provider.js',
+  'js/extensions/me-angular-models/classes/*.js',
+  'js/app/**/!(app).module.js',                                             // import all module definitions
+  'js/app/**/!(app).module.config.js',                                      // import all provider configs
+  'js/app/**/!(app).module.run.js',                                         // import all runtime configs
+  'js/app/**/!(app).class!(\.spec|\.run|\.config).js',                      // import all custom classes
+  'js/app/**/!(app).@(directive|factory|service|controller|provider|helper|model|collection).js',   // import all providers
   // import the application root module
-  'js/**/app.module.js',
-  'js/**/app.module.config.js',
-  'js/**/app.module.run.js'
+  'js/app/app.module.js',
+  'js/app/app.module.config.js',
+  'js/app/app.module.run.js'
 ];
 
 
