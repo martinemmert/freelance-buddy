@@ -27,6 +27,10 @@
             _.extend(proto, collection.methods);
           }
 
+          if (collection.properties) {
+            Object.defineProperties(proto, collection.properties);
+          }
+
           return new (BaseCollection.extend(null, proto));
         }]);
       }

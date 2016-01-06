@@ -43,7 +43,6 @@
     });
 
     vm.setModel = function (model) {
-      console.log(model);
       if (model.$isStored) {
         CustomerCollection.get(model.customerId).then(function (model) {
           vm.formData.selectedCustomer = model;

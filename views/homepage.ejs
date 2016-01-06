@@ -55,3 +55,19 @@
     loading ...
   </div>
 </div>
+<h3>Incomes</h3>
+<div ng-controller="app.incomes.controller as vm">
+  <income-form data-income-model="vm.selectedModel"></income-form>
+  <ul ng-if="vm.incomeCollection.length > 0">
+    <li ng-repeat="income in vm.incomeCollection">
+      {{income.subproject.title}} - {{income.comment}} - {{income.invoiceNumber}} - {{income.payedOn}} -
+      {{income.netTotal}} - {{income.taxValue}} - {{income.grossTotal}} - {{income.taxFree}}
+      <input type="button" value="Edit" ng-click="vm.selectModel(income)">
+      <input type="button" value="Delete" ng-click="income.$delete()">
+    </li>
+  </ul>
+  Net Total: {{vm.incomeCollection.grandNetTotal}} Gross Total: {{vm.incomeCollection.grandGrossTotal}}
+  <div ng-if="!vm.incomeCollectionLoaded">
+    loading ...
+  </div>
+</div>

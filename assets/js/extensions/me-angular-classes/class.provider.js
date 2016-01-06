@@ -19,6 +19,7 @@
       function $class(name) {
         return $injector.get(name + suffix);
       }
+
       return $class;
     }];
 
@@ -45,9 +46,11 @@
       SurrogateClass.prototype = Object.create(rootClass.prototype);
       SurrogateClass.prototype.constructor = SurrogateClass;
 
-      _.forEach(childPrototype, function (identifier, member) {
-        SurrogateClass.prototype[member] = identifier;
-      });
+      if (childPrototype) {
+        _.forEach(Object.getOwnPropertyNames(childPrototype), function (propertyName) {
+          Object.defineProperty(SurrogateClass.prototype, propertyName, Object.getOwnPropertyDescriptor(childPrototype, propertyName));
+        });
+      }
 
       SurrogateClass.extend = function (childConstructor, childPrototype) {
         return extend(SurrogateClass, childConstructor, childPrototype)
