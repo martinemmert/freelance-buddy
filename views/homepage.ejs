@@ -13,12 +13,26 @@
     loading ...
   </div>
 </div>
+<h2>Suppliers</h2>
+<div ng-controller="app.suppliers.controller as vm">
+  <supplier-form data-supplier-model="vm.selectedModel"></supplier-form>
+  <ul ng-if="vm.supplierCollection.length > 0">
+    <li ng-repeat="supplier in vm.supplierCollection">
+      {{supplier.name}}
+      <input type="button" value="Edit" ng-click="vm.selectModel(supplier)">
+      <input type="button" value="Delete" ng-click="supplier.$delete()">
+    </li>
+  </ul>
+  <div ng-if="!vm.supplierCollectionLoaded">
+    loading ...
+  </div>
+</div>
 <h3>Projects</h3>
 <div ng-controller="app.projects.controller as vm">
   <project-form data-project-model="vm.selectedModel"></project-form>
   <ul ng-if="vm.projectCollection.length > 0">
     <li ng-repeat="project in vm.projectCollection track by project.tracker">
-      {{project.customer.name}} - {{project.title}} - {{project.projectNumber}} - {{project.tracker}}
+      {{project.customer.labelText}} - {{project.title}} - {{project.projectNumber}} - {{project.tracker}}
       <input type="button" value="Edit" ng-click="vm.selectModel(project)">
       <input type="button" value="Delete" ng-click="project.$delete()">
     </li>
