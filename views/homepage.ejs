@@ -46,7 +46,7 @@
   <subproject-form data-subproject-model="vm.selectedModel"></subproject-form>
   <ul ng-if="vm.subprojectCollection.length > 0">
     <li ng-repeat="subproject in vm.subprojectCollection">
-      {{subproject.project.title}} - {{subproject.title}} - {{subproject.projectNumber}}
+      {{subproject.project.customer.labelText}} - {{subproject.project.title}} - {{subproject.title}} - {{subproject.projectNumber}}
       <input type="button" value="Edit" ng-click="vm.selectModel(subproject)">
       <input type="button" value="Delete" ng-click="subproject.$delete()">
     </li>
@@ -60,7 +60,7 @@
   <income-form data-income-model="vm.selectedModel"></income-form>
   <ul ng-if="vm.incomeCollection.length > 0">
     <li ng-repeat="income in vm.incomeCollection">
-      {{income.subproject.title}} - {{income.comment}} - {{income.invoiceNumber}} - {{income.payedOn}} -
+      {{income.subproject.project.customer.labelText}} {{income.subproject.project.title}} {{income.subproject.title}} - {{income.comment}} - {{income.invoiceNumber}} - {{income.payedOn}} -
       {{income.netTotal}} - {{income.taxValue}} - {{income.grossTotal}} - {{income.taxFree}}
       <input type="button" value="Edit" ng-click="vm.selectModel(income)">
       <input type="button" value="Delete" ng-click="income.$delete()">
@@ -68,6 +68,22 @@
   </ul>
   Net Total: {{vm.incomeCollection.grandNetTotal}} Gross Total: {{vm.incomeCollection.grandGrossTotal}}
   <div ng-if="!vm.incomeCollectionLoaded">
+    loading ...
+  </div>
+</div>
+<h3>Spendings</h3>
+<div ng-controller="app.spendings.controller as vm">
+  <spending-form data-spending-model="vm.selectedModel"></spending-form>
+  <ul ng-if="vm.spendingCollection.length > 0">
+    <li ng-repeat="spending in vm.spendingCollection">
+      {{spending.supplier.name}} - {{spending.comment}} - {{spending.invoiceNumber}} - {{spending.payedOn}} -
+      {{spending.netTotal}} - {{spending.taxValue}} - {{spending.grossTotal}} - {{spending.taxFree}}
+      <input type="button" value="Edit" ng-click="vm.selectModel(spending)">
+      <input type="button" value="Delete" ng-click="spending.$delete()">
+    </li>
+  </ul>
+  Net Total: {{vm.spendingCollection.grandNetTotal}} Gross Total: {{vm.spendingCollection.grandGrossTotal}}
+  <div ng-if="!vm.spendingCollectionLoaded">
     loading ...
   </div>
 </div>
