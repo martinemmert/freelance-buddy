@@ -72,7 +72,6 @@
     vm.create = function () {
       vm.cancel();
       vm.projectModel = ProjectCollection.$new();
-      console.log(vm.customerCollection);
     };
 
     if (vm.projectModel) {

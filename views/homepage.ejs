@@ -3,10 +3,17 @@
 <div ng-controller="app.customers.controller as vm">
   <customer-form data-customer-model="vm.selectedModel"></customer-form>
   <ul ng-if="vm.customersCollection.length > 0">
-    <li ng-repeat="customer in vm.customersCollection">
+    <li ng-repeat="customer in vm.customersCollection track by $index">
       {{customer.labelText}}
       <input type="button" value="Edit" ng-click="vm.selectModel(customer)">
       <input type="button" value="Delete" ng-click="customer.$delete()">
+      <ul ng-if="customer.projects.length > 0">
+        <li ng-repeat="project in customer.projects track by $index">
+          {{project.title}} - {{project.projectNumber}} - {{project.tracker}}
+          <!--<input type="button" value="Edit" ng-click="vm.selectModel(customer)">-->
+          <!--<input type="button" value="Delete" ng-click="customer.$delete()">-->
+        </li>
+      </ul>
     </li>
   </ul>
   <div ng-if="!vm.customersCollectionLoaded">

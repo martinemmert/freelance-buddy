@@ -31,7 +31,7 @@
             Object.defineProperties(proto, collection.properties);
           }
 
-          return new (BaseCollection.extend(null, proto));
+          return new (BaseCollection.extend(proto));
         }]);
       }
     }

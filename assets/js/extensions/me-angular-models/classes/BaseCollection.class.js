@@ -13,7 +13,7 @@
 
     var BaseModelApi = $class('BaseModelApi');
 
-    var BaseCollection = $class.extend(Array, function BaseCollection(ModelClass) {
+    function BaseCollection(ModelClass) {
 
       var _self = this;
 
@@ -37,8 +37,10 @@
         value: false
       });
 
-      Array.apply(_self);
-    });
+    }
+
+    BaseCollection.prototype = Object.create(Array.prototype);
+    BaseCollection.prototype.constructor = BaseCollection;
 
     Object.defineProperty(BaseCollection.prototype, '$new', {
       value: function (data) {
@@ -65,7 +67,6 @@
       value: function (id) {
         var _self = this, needle = _.find(_self, {id: id});
         if (!needle) {
-          console.log("not loaded");
           var model = new _self.ModelClass({id: id});
           model.promise = model.$load(id);
           model.promise.then(function (loadedModel) {
@@ -77,19 +78,19 @@
               model.$onDeleted.dispatch(model);
             }
           });
+          model.$onDeleted.addOnce(_deleteListener, _self);
           _self.push(model);
           return model.promise;
         } else if (!needle.$isLoaded) {
-          console.log("currently loading");
           return needle.promise;
         } else {
-          console.log("already loaded");
           return $q.when(needle);
         }
       }
     });
 
     Object.defineProperty(BaseCollection.prototype, 'add', {
+      configurable: true,
       value: function (model) {
         if (!this.hasModel(model)) {
           this.push(model);
@@ -97,9 +98,19 @@
       }
     });
 
+    Object.defineProperty(BaseCollection.prototype, 'remove', {
+      configurable: true,
+      value: function (model) {
+        if (this.hasModel(model)) {
+          var index = this.indexOf(model);
+          this.splice(index, 1);
+        }
+      }
+    });
+
     Object.defineProperty(BaseCollection.prototype, '$query', {
       value: function () {
-        var _self = this, deferred;
+        var _self = this;
         if (!_self.$isLoaded) {
           _self.$isLoading = true;
           _self._loadingPromise = BaseModelApi.$query(_self.url);
@@ -108,9 +119,9 @@
             _self.$isLoaded = true;
             _.forEach(data, function (rawModel) {
               var model = new _self.ModelClass(rawModel);
-              model.$onDeleted.addOnce(_deleteListener, _self);
               model.$isLoaded = true;
               model.$isStored = true;
+              model.$onDeleted.addOnce(_deleteListener, _self);
               _self.add(model);
             });
             delete _self._loadingPromise;
@@ -125,16 +136,139 @@
       }
     });
 
+    Object.defineProperty(BaseCollection.prototype, 'createSubCollection', {
+      value: function (filterProp, filterValue) {
+
+        var subCollection,
+            parentCollection = this,
+            parentConstructor = this.constructor,
+            parentPrototype = this.constructor.prototype;
+
+        // here starts the magic!!
+        // we alter the prototype of the root collection to inform its children when
+        // a model was added or removed
+        if (!this.parent) {
+          // extend the add method to add models to all subCollections
+          Object.defineProperty(parentPrototype, 'add', {
+            configurable: true,
+            value: function (model) {
+              BaseCollection.prototype.add.call(this, model);
+              if (!model.$onSaved.has(_updateListener, this)) {
+                model.$onSaved.addOnce(_updateListener, this);
+              }
+              // fixme: go through sub collection branches instead of iterating through all sub collections
+              this.subCollections.forEach(function (subCollection) {
+                // check if the parent sub collection has the model
+                // if not we don't have to add it because it was filtered out previously
+                if (subCollection.parent.hasModel(model)) {
+                  if (subCollection.filterValue == model[subCollection.filterProp]) {
+                    subCollection.push(model);
+                  }
+                }
+              });
+            }
+          });
+
+          // extend the remove method to remove models from all subCollections
+          Object.defineProperty(parentPrototype, 'remove', {
+            configurable: true,
+            value: function (model) {
+              BaseCollection.prototype.remove.call(this, model);
+              model.$onSaved.remove(_updateListener, this);
+              this.subCollections.forEach(function (subCollection) {
+                var index = subCollection.indexOf(model);
+                if (index != -1) {
+                  subCollection.splice(index, 1);
+                }
+              });
+            }
+          });
+
+          Object.defineProperty(parentPrototype, 'registerSubCollection', {
+            configurable: true,
+            value: function (subCollection) {
+              if (!this.subCollections) {
+                var _self = this;
+                Object.defineProperty(_self, 'subCollections', {value: []});
+                _self.forEach(function (model) {
+                  model.$onSaved.addOnce(_updateListener, _self);
+                });
+              }
+              this.subCollections.push(subCollection);
+            }
+          });
+        }
+
+        function SubCollectionClass() {
+          var _self = this;
+          parentConstructor.call(_self);
+        }
+
+        SubCollectionClass.prototype = Object.create(parentPrototype);
+        SubCollectionClass.prototype.constructor = SubCollectionClass;
+
+        Object.defineProperty(SubCollectionClass.prototype, 'parent', {value: parentCollection});
+        Object.defineProperty(SubCollectionClass.prototype, 'filterProp', {value: filterProp});
+        Object.defineProperty(SubCollectionClass.prototype, 'filterValue', {value: filterValue});
+
+        // allow access to the root collection
+        // should not be used public, only internal
+        if (!this.parent)Object.defineProperty(SubCollectionClass.prototype, 'root', {value: parentCollection});
+
+        // override the add method to add models directly to the root collection
+        // added models will cascade down and added to all subCollections
+        Object.defineProperty(SubCollectionClass.prototype, 'add', {
+          configurable: true,
+          value: function (model) {
+            this.root.add(model);
+          }
+        });
+
+        // override the remove method to remove models directly from the root collection
+        // removed models will cascade down and removed to all subCollections
+        Object.defineProperty(SubCollectionClass.prototype, 'remove', {
+          configurable: true,
+          value: function (model) {
+            this.root.remove(model);
+          }
+        });
+
+        subCollection = new SubCollectionClass(this);
+        subCollection.root.registerSubCollection(subCollection);
+
+        this.forEach(function (model) {
+          if (model[filterProp] == filterValue) {
+            if (!subCollection.hasModel(model)) {
+              subCollection.push(model);
+            }
+          }
+        });
+
+        return subCollection;
+      }
+    });
+
+    BaseCollection.extend = function (childPrototype) {
+      return $class.extend(BaseCollection, null, childPrototype);
+    };
+
     return BaseCollection;
   }
 
   function _saveListener(model) {
-    this.push(model);
+    console.log("save", model, this);
+    this.add(model);
+  }
+
+  function _updateListener(model) {
+    console.log("update", this);
+    this.remove(model);
+    this.add(model);
   }
 
   function _deleteListener(model) {
-    var index = this.indexOf(model);
-    this.splice(index, 1);
+    this.remove(model);
+    model.$onLoaded.removeAll();
     model.$onSaved.removeAll();
     model.$onDeleted.removeAll();
   }

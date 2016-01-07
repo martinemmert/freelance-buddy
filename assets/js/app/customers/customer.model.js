@@ -8,6 +8,12 @@
         return {
           url: 'customers',
           fields: ['name', 'abbreviation'],
+          hasMany: {
+            relation: 'Project',
+            compositeField: 'projects',
+            relationField: 'customerId',
+            relationKey: 'id'
+          },
           composed: {
             'labelText': {
               get: function () {

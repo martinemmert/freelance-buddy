@@ -27,6 +27,32 @@
                 composed: modelDefinition.composed
               };
 
+          if (modelDefinition.hasMany) {
+            proto.composed[modelDefinition.hasMany.compositeField] = {
+              get: (function (fieldName, relation, relationField, relationKey) {
+                var __loading      = false,
+                    collectionName = relation;
+
+                //fixme: strange behaviour with the relation property!?
+
+                return function () {
+                  var _self    = this,
+                      relation = $collection(collectionName);
+
+                  if (!__loading) {
+                    __loading = true;
+                    // fixme: raw data is returned!!
+                    relation.$query().then(function () {
+                      Object.defineProperty(_self, fieldName, {value: relation.createSubCollection(relationField, _self[relationKey])});
+                      __loading = false;
+                    });
+                  }
+
+                }
+              })(modelDefinition.hasMany.compositeField, modelDefinition.hasMany.relation, modelDefinition.hasMany.relationField, modelDefinition.hasMany.relationKey)
+            }
+          }
+
           if (modelDefinition.belongsTo) {
             proto.composed[modelDefinition.belongsTo.compositeField] = {
               get: (function (fieldName, relation, relationField) {
@@ -37,10 +63,10 @@
                     __loading = true;
                     relation.get(_self[relationField]).then(function (model) {
                       Object.defineProperty(_self, fieldName, {configurable: true, value: model});
+                      // by deleting the instance property we are returning to the getter of the prototype
                       _self.$onSaved.addOnce(function () {
-                        // by deleting the instance property we are returning to the getter of the prototype
-                        delete _self[fieldName];
-                      });
+                        delete this[fieldName];
+                      }, _self);
                       __loading = false;
                       return model;
                     });
