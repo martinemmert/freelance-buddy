@@ -1,0 +1,15 @@
+<form name="ctrl.form" ng-submit="ctrl.save()">
+  <fieldset>
+    <legend>Supplier Form</legend>
+    <div ng-if="ctrl.supplierModel">
+      <label for="supplier-form-name">Name:</label>
+      <input type="text" name="name" id="supplier-form-name" ng-model="ctrl.formData.name" ng-required="true">
+
+      <input type="submit" value="Save" ng-disabled="ctrl.form.$invalid"/>
+      <input type="button" value="Cancel" ng-click="ctrl.cancel()"/>
+    </div>
+    <div ng-if="!ctrl.supplierModel">
+      <input type="button" value="New" ng-click="ctrl.create()"/>
+    </div>
+  </fieldset>
+</form>

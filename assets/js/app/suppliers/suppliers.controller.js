@@ -5,26 +5,11 @@
     .module("app.suppliers")
     .controller('app.suppliers.controller', SuppliersController);
 
-  SuppliersController.$inject = ['$scope', 'SupplierCollection'];
+  SuppliersController.$inject = ['$scope', 'supplierCollection'];
 
-  function SuppliersController($scope, SupplierCollection) {
-
+  function SuppliersController($scope, supplierCollection) {
     var vm = this;
-    vm.supplierCollection = SupplierCollection;
-    vm.supplierCollectionLoaded = SupplierCollection.$isLoaded;
-
-    vm.selectModel = function (model) {
-      vm.selectedModel = model;
-    };
-
-    load();
-
-    function load() {
-      SupplierCollection.$query().then(function () {
-        vm.supplierCollectionLoaded = SupplierCollection.$isLoaded;
-      });
-    }
-
+    vm.supplierCollection = supplierCollection;
   }
 
 })(angular);

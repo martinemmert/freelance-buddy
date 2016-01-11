@@ -11,25 +11,30 @@
   <!--STYLES END-->
 </head>
 
-<body ng-app="app">
-<header class="top-bar">
-  <h1>Freelance Buddy</h1>
-</header>
-<nav>
-  <ul class="main-navigation">
-    <li class="main-navigation--element">
-      <a ui-sref="customers" ui-sref-active="active" class="main-navigation--element--link">Customers</a>
-    </li>
-  </ul>
-</nav>
-<div class="main-content-area-container" >
-  <main class="main-content-area" ui-view>
-    <!-- content will be rendered here -->
-  </main>
+<body>
+<div class="app-wrapper" ng-app="app">
+  <header class="top-bar">
+    <h1>Freelance Buddy</h1>
+  </header>
+  <nav>
+    <ul class="main-navigation">
+      <li class="main-navigation--element">
+        <a ui-sref="customers" ui-sref-active="active" class="main-navigation--element--link">Customers</a>
+      </li>
+      <li class="main-navigation--element">
+        <a ui-sref="suppliers" ui-sref-active="active" class="main-navigation--element--link">Suppliers</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="main-content-area-container">
+    <main class="main-content-area" ui-view>
+      <!-- content will be rendered here -->
+    </main>
+  </div>
+  <footer class="footer-bar">
+    <small>&copy; Martin Emmert 2016, Freelance Buddy v.0.2</small>
+  </footer>
 </div>
-<footer class="footer-bar">
-  <small>&copy; Martin Emmert 2016, Freelance Buddy v.0.2</small>
-</footer>
 
 <!--
     Client-side Templates
@@ -83,7 +88,6 @@
 <script src="/js/app/customers/customer-delete.controller.js"></script>
 <script src="/js/app/customers/customer-details.controller.js"></script>
 <script src="/js/app/customers/customer-edit.controller.js"></script>
-<script src="/js/app/customers/customer-form.directive.js"></script>
 <script src="/js/app/customers/customer.collection.js"></script>
 <script src="/js/app/customers/customer.model.js"></script>
 <script src="/js/app/customers/customers.controller.js"></script>
@@ -103,6 +107,9 @@
 <script src="/js/app/subprojects/subproject.collection.js"></script>
 <script src="/js/app/subprojects/subproject.model.js"></script>
 <script src="/js/app/subprojects/subprojects.controller.js"></script>
+<script src="/js/app/suppliers/supplier-delete.controller.js"></script>
+<script src="/js/app/suppliers/supplier-details.controller.js"></script>
+<script src="/js/app/suppliers/supplier-edit.controller.js"></script>
 <script src="/js/app/suppliers/supplier-form.directive.js"></script>
 <script src="/js/app/suppliers/supplier.collection.js"></script>
 <script src="/js/app/suppliers/supplier.model.js"></script>
