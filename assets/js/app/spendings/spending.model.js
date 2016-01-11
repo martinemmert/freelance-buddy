@@ -8,11 +8,13 @@
         return {
           url: 'spendings',
           fields: ['supplierId', 'comment', 'invoiceNumber', 'payedOn', 'netTotal', 'taxValue', 'taxFree'],
-          belongsTo: {
-            relation: 'Supplier',
-            relationField: 'supplierId',
-            compositeField: 'supplier'
-          },
+          belongsTo: [
+            {
+              relation: 'Supplier',
+              relationField: 'supplierId',
+              compositeField: 'supplier'
+            }
+          ],
           composed: {
             'isPayed': {
               get: function () {

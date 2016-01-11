@@ -8,11 +8,13 @@
         return {
           url: 'incomes',
           fields: ['subprojectId', 'comment', 'invoiceNumber', 'payedOn', 'netTotal', 'taxValue', 'taxFree'],
-          belongsTo: {
-            relation: 'Subproject',
-            relationField: 'subprojectId',
-            compositeField: 'subproject'
-          },
+          belongsTo: [
+            {
+              relation: 'Subproject',
+              relationField: 'subprojectId',
+              compositeField: 'subproject'
+            }
+          ],
           composed: {
             'isPayed': {
               get: function () {

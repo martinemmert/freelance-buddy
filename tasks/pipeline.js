@@ -37,6 +37,7 @@ var jsFilesToInject = [
   'js/extensions/me-angular-models/me-angular-models.module.js',
   'js/extensions/me-angular-models/model.provider.js',
   'js/extensions/me-angular-models/collection.provider.js',
+  'js/extensions/me-angular-models/model-relation-builder.factory.js',
   'js/extensions/me-angular-models/classes/*.js',
   'js/app/**/!(app).module.js',                                             // import all module definitions
   'js/app/**/!(app).module.config.js',                                      // import all provider configs

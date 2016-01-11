@@ -8,11 +8,13 @@
         return {
           url: 'subprojects',
           fields: ['projectId', 'title', 'projectNumber'],
-          belongsTo: {
-            relation: 'Project',
-            relationField: 'projectId',
-            compositeField: 'project'
-          },
+          belongsTo: [
+            {
+              relation: 'Project',
+              relationField: 'projectId',
+              compositeField: 'project'
+            }
+          ],
           composed: {}
         }
       });
