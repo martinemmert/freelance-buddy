@@ -5,26 +5,13 @@
     .module("app.customers")
     .controller('app.customers.controller', CustomersController);
 
-  CustomersController.$inject = ['$scope', 'CustomerCollection'];
+  // customerCollection will be injected via UI-Router State
+  CustomersController.$inject = ['$scope', 'customerCollection'];
 
-  function CustomersController($scope, CustomerCollection) {
-
+  function CustomersController($scope, customerCollection) {
     var vm = this;
-    vm.customersCollection = CustomerCollection;
-    vm.customersCollectionLoaded = CustomerCollection.$isLoaded;
-
-    vm.selectModel = function (model) {
-      vm.selectedModel = model;
-    };
-
-    load();
-
-    function load() {
-      CustomerCollection.$query().then(function () {
-        vm.customersCollectionLoaded = CustomerCollection.$isLoaded;
-      });
-    }
-
+    vm.customersCollection = customerCollection;
+    vm.customersCollectionLoaded = customerCollection.$isLoaded;
   }
 
 })(angular);

@@ -65,7 +65,7 @@
 
     Object.defineProperty(BaseCollection.prototype, 'get', {
       value: function (id) {
-        var _self = this, needle = _.find(_self, {id: id});
+        var _self = this, needle = _.find(_self, {id: parseInt(id)});
         if (!needle) {
           var model = new _self.ModelClass({id: id});
           model.promise = model.$load(id);
@@ -113,20 +113,21 @@
         var _self = this;
         if (!_self.$isLoaded) {
           _self.$isLoading = true;
-          _self._loadingPromise = BaseModelApi.$query(_self.url);
-          _self._loadingPromise.then(function (data) {
-            _self.$isLoading = false;
-            _self.$isLoaded = true;
-            _.forEach(data, function (rawModel) {
-              var model = new _self.ModelClass(rawModel);
-              model.$isLoaded = true;
-              model.$isStored = true;
-              model.$onDeleted.addOnce(_deleteListener, _self);
-              _self.add(model);
+          _self._loadingPromise = BaseModelApi
+            .$query(_self.url)
+            .then(function (data) {
+              _self.$isLoading = false;
+              _self.$isLoaded = true;
+              _.forEach(data, function (rawModel) {
+                var model = new _self.ModelClass(rawModel);
+                model.$isLoaded = true;
+                model.$isStored = true;
+                model.$onDeleted.addOnce(_deleteListener, _self);
+                _self.add(model);
+              });
+              delete _self._loadingPromise;
+              return _self;
             });
-            delete _self._loadingPromise;
-            return _self;
-          });
           return _self._loadingPromise;
         } else if (!_self.$isLoaded && _self.$isLoading) {
           return _self._loadingPromise;
@@ -256,12 +257,10 @@
   }
 
   function _saveListener(model) {
-    console.log("save", model, this);
     this.add(model);
   }
 
   function _updateListener(model) {
-    console.log("update", this);
     this.remove(model);
     this.add(model);
   }

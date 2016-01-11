@@ -1,0 +1,16 @@
+<h1>{{ctrl.customerModel.labelText}}</h1>
+<nav>
+  <ul>
+    <li><a ui-sref="customers.edit({customerId: ctrl.customerModel.id})">[Edit]</a></li>
+    <li><a ui-sref="customers.delete({customerId: ctrl.customerModel.id})">[Delete]</a></li>
+  </ul>
+</nav>
+<section>
+  <h1>Projects</h1>
+  <ul ng-if="ctrl.customerModel.projects.length > 0">
+    <li ng-repeat="project in ctrl.customerModel.projects track by project.tracker">
+      {{project.title}} - {{project.projectNumber}} - {{project.tracker}}
+    </li>
+  </ul>
+  <p ng-if="ctrl.customerModel.projects.length == 0">This customer has no projects</p>
+</section>
