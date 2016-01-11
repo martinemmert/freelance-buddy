@@ -54,6 +54,19 @@
             });
           }
 
+          if (modelDefinition.hasOne) {
+            modelDefinition.hasOne.forEach(function (relation) {
+              proto.composed[relation.compositeField] = {
+                get: ModelRelationBuilder.createHasOne.call(this, relation.compositeField, relation.relation, relation.relationField)
+              };
+              proto.composed["$" + relation.compositeField] = {
+                get: function () {
+                  return $q.when(this[relation.compositeField]);
+                }
+              }
+            });
+          }
+
           if (modelDefinition.methods) {
             _.extend(proto, modelDefinition.methods);
           }
