@@ -1,0 +1,15 @@
+<div class="subprojects-area">
+  <header>
+    <h1>Subprojects</h1>
+  </header>
+  <nav>
+    <a ui-sref="projects.details.subprojectsCreate">Add new Project</a>
+    <ul>
+      <li ng-repeat="subproject in ctrl.subprojectCollection track by subproject.id">
+        <a ui-sref="projects.details.subprojectDetails({subprojectId: subproject.id})">{{subproject.title}}</a>
+      </li>
+    </ul>
+  </nav>
+  <article class="project-detail" ui-view></article>
+</div>
+

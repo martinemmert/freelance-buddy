@@ -2,7 +2,7 @@
   "use strict";
 
   angular
-    .module('app.subprojects')
+    .module('app.projects')
     .config(['$modelProvider', function ($modelProvider) {
       $modelProvider.register('Subproject', function () {
         return {

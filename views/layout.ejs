@@ -24,6 +24,9 @@
       <li class="main-navigation--element">
         <a ui-sref="suppliers" ui-sref-active="active" class="main-navigation--element--link">Suppliers</a>
       </li>
+      <li class="main-navigation--element">
+        <a ui-sref="projects" ui-sref-active="active" class="main-navigation--element--link">Projects</a>
+      </li>
     </ul>
   </nav>
   <div class="main-content-area-container">
@@ -34,8 +37,8 @@
   <footer class="footer-bar">
     <small>&copy; Martin Emmert 2016, Freelance Buddy v.0.2</small>
   </footer>
+<!--<%- body %>-->
 </div>
-
 <!--
     Client-side Templates
     ========================
@@ -95,10 +98,18 @@
 <script src="/js/app/incomes/income.collection.js"></script>
 <script src="/js/app/incomes/income.model.js"></script>
 <script src="/js/app/incomes/incomes.controller.js"></script>
-<script src="/js/app/projects/project-form.directive.js"></script>
+<script src="/js/app/projects/project-delete.controller.js"></script>
+<script src="/js/app/projects/project-details.controller.js"></script>
+<script src="/js/app/projects/project-edit.controller.js"></script>
 <script src="/js/app/projects/project.collection.js"></script>
 <script src="/js/app/projects/project.model.js"></script>
 <script src="/js/app/projects/projects.controller.js"></script>
+<script src="/js/app/projects/subproject-delete.controller.js"></script>
+<script src="/js/app/projects/subproject-details.controller.js"></script>
+<script src="/js/app/projects/subproject-edit.controller.js"></script>
+<script src="/js/app/projects/subproject.collection.js"></script>
+<script src="/js/app/projects/subproject.model.js"></script>
+<script src="/js/app/projects/subprojects.controller.js"></script>
 <script src="/js/app/spendings/spending-form.directive.js"></script>
 <script src="/js/app/spendings/spending.collection.js"></script>
 <script src="/js/app/spendings/spending.model.js"></script>
@@ -110,7 +121,6 @@
 <script src="/js/app/suppliers/supplier-delete.controller.js"></script>
 <script src="/js/app/suppliers/supplier-details.controller.js"></script>
 <script src="/js/app/suppliers/supplier-edit.controller.js"></script>
-<script src="/js/app/suppliers/supplier-form.directive.js"></script>
 <script src="/js/app/suppliers/supplier.collection.js"></script>
 <script src="/js/app/suppliers/supplier.model.js"></script>
 <script src="/js/app/suppliers/suppliers.controller.js"></script>

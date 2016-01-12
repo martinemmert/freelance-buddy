@@ -1,0 +1,14 @@
+<form name="ctrl.form" ng-submit="ctrl.save()">
+  <fieldset>
+    <legend>subproject Form</legend>
+    <strong>Project:</strong> {{ctrl.projectModel.title}}
+    <label for="subproject-form-title">Title:</label>
+    <input type="text" name="title" id="subproject-form-title" ng-model="ctrl.formData.title" ng-required="true">
+
+    <label for="subproject-form-project-number">ProjectNumber:</label>
+    <input type="text" name="projectNumber" id="subproject-form-project-number" ng-model="ctrl.formData.projectNumber" ng-required="true">
+
+    <input type="submit" value="Save" ng-disabled="ctrl.form.$invalid"/>
+    <input type="button" value="Cancel" ng-click="ctrl.cancel()"/>
+  </fieldset>
+</form>

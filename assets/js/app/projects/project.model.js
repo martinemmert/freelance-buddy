@@ -4,7 +4,7 @@
   angular
     .module('app.projects')
     .config(['$modelProvider', function ($modelProvider) {
-      $modelProvider.register('Project', ['CustomerCollection', function (CustomerCollection) {
+      $modelProvider.register('Project', function () {
         return {
           url: 'projects',
           fields: ['customerId', 'title', 'projectNumber'],
@@ -15,9 +15,16 @@
               compositeField: 'customer'
             }
           ],
-          composed: {}
+          hasMany: [
+            {
+              relation: 'Subproject',
+              relationField: 'projectId',
+              relationKey: 'id',
+              compositeField: 'subprojects'
+            }
+          ]
         }
-      }]);
+      });
     }]);
 
 })(angular);

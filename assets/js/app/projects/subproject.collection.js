@@ -2,7 +2,7 @@
   "use strict";
 
   angular
-    .module("app.subprojects")
+    .module("app.projects")
     .config(['$collectionProvider', function ($collectionProvider) {
       $collectionProvider.register('Subproject', SubprojectCollectionProvider);
     }]);

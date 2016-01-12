@@ -1,0 +1,24 @@
+<form name="ctrl.form" ng-submit="ctrl.save()">
+  <fieldset>
+    <legend>Project Form</legend>
+    <div ng-if="ctrl.projectModel">
+
+      <label for="project-form-customer-id">Customer:</label>
+      <select name="customerId" id="project-form-customer-id" ng-model="ctrl.formData.selectedCustomer" ng-required="true"
+              ng-options="customer.labelText for customer in ctrl.customerCollection">
+      </select>
+
+      <label for="project-form-title">Title:</label>
+      <input type="text" name="title" id="project-form-title" ng-model="ctrl.formData.title" ng-required="true">
+
+      <label for="project-form-project-number">ProjectNumber:</label>
+      <input type="text" name="projectNumber" id="project-form-project-number" ng-model="ctrl.formData.projectNumber" ng-required="true">
+
+      <input type="submit" value="Save" ng-disabled="ctrl.form.$invalid"/>
+      <input type="button" value="Cancel" ng-click="ctrl.cancel()"/>
+    </div>
+    <div ng-if="!ctrl.projectModel">
+      <input type="button" value="New" ng-click="ctrl.create()"/>
+    </div>
+  </fieldset>
+</form>

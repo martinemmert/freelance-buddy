@@ -1,0 +1,7 @@
+<h1>{{ctrl.subprojectModel.projectNumber}} {{ctrl.subprojectModel.title}}</h1>
+<nav>
+  <ul>
+    <li><a ui-sref="projects.details.editSubproject({subprojectId: ctrl.subprojectModel.id})">[Edit]</a></li>
+    <li><a ui-sref="projects.details.deleteSubproject({subprojectId: ctrl.subprojectModel.id})">[Delete]</a></li>
+  </ul>
+</nav>

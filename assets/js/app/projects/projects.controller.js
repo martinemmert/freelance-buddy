@@ -5,26 +5,11 @@
     .module("app.projects")
     .controller('app.projects.controller', ProjectsController);
 
-  ProjectsController.$inject = ['$scope', 'ProjectCollection'];
+  ProjectsController.$inject = ['$scope', 'projectCollection'];
 
-  function ProjectsController($scope, ProjectCollection) {
-
+  function ProjectsController($scope, projectCollection) {
     var vm = this;
-    vm.projectCollection = ProjectCollection;
-    vm.projectCollectionLoaded = ProjectCollection.$isLoaded;
-
-    vm.selectModel = function (model) {
-      vm.selectedModel = model;
-    };
-
-    load();
-
-    function load() {
-      ProjectCollection.$query().then(function () {
-        vm.projectCollectionLoaded = ProjectCollection.$isLoaded;
-      });
-    }
-
+    vm.projectCollection = projectCollection;
   }
 
 })(angular);

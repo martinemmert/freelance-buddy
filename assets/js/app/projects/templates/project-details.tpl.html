@@ -1,0 +1,13 @@
+<h1>{{ctrl.projectModel.customer.labelText}}: {{ctrl.projectModel.title}} - {{ctrl.projectModel.projectNumber}}</h1>
+<nav>
+  <ul>
+    <li><a ui-sref="projects.edit({projectId: ctrl.projectModel.id})">[Edit]</a></li>
+    <li><a ui-sref="projects.delete({projectId: ctrl.projectModel.id})">[Delete]</a></li>
+  </ul>
+</nav>
+<section>
+  <h1>Customer</h1>
+
+  <p>{{ctrl.projectModel.customer.labelText}}</p>
+</section>
+<section ui-view="subprojects"></section>
