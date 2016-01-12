@@ -21,19 +21,15 @@
         Object.defineProperty(_self, 'ModelClass', {value: ModelClass});
       }
 
-      Object.defineProperty(_self, 'url', {
-        get: function () {
-          return _self.ModelClass.prototype.api.url
-        }
-      });
-
       Object.defineProperty(_self, '$isLoaded', {
         writable: true,
+        configurable: true,
         value: false
       });
 
       Object.defineProperty(_self, '$isLoading', {
         writable: true,
+        configurable: true,
         value: false
       });
 
@@ -41,6 +37,12 @@
 
     BaseCollection.prototype = Object.create(Array.prototype);
     BaseCollection.prototype.constructor = BaseCollection;
+
+    Object.defineProperty(BaseCollection.prototype, 'url', {
+      get: function () {
+        return this.ModelClass.prototype.api.url
+      }
+    });
 
     Object.defineProperty(BaseCollection.prototype, '$new', {
       value: function (data) {
@@ -60,6 +62,20 @@
           needle = _.find(this, {id: model.id});
         }
         return needle != null;
+      }
+    });
+
+    /**
+     * get model by id
+     * @param id
+     * @returns {BaseModel|null}
+     */
+    Object.defineProperty(BaseCollection.prototype, 'getModel', {
+      value: function (id) {
+        if (this.hasModel(id)) {
+          return _.find(this, {id: id});
+        }
+        return null;
       }
     });
 
@@ -111,7 +127,7 @@
     Object.defineProperty(BaseCollection.prototype, '$query', {
       value: function () {
         var _self = this;
-        if (!_self.$isLoaded) {
+        if (!_self.$isLoaded && !_self.$isLoading) {
           _self.$isLoading = true;
           _self._loadingPromise = BaseModelApi
             .$query(_self.url)
@@ -201,8 +217,6 @@
         }
 
         function SubCollectionClass() {
-          var _self = this;
-          parentConstructor.call(_self);
         }
 
         SubCollectionClass.prototype = Object.create(parentPrototype);
@@ -215,6 +229,26 @@
         // allow access to the root collection
         // should not be used public, only internal
         if (!this.parent)Object.defineProperty(SubCollectionClass.prototype, 'root', {value: parentCollection});
+
+        Object.defineProperty(SubCollectionClass.prototype, '$isLoaded', {
+          configurable: true,
+          get: function () {
+            return this.root.$isLoaded;
+          },
+          set: function (value) {
+            this.root.$isLoaded = value;
+          }
+        });
+
+        Object.defineProperty(SubCollectionClass.prototype, '$isLoading', {
+          configurable: true,
+          get: function () {
+            return this.root.$isLoading;
+          },
+          set: function (value) {
+            this.root.$isLoading = value;
+          }
+        });
 
         // override the add method to add models directly to the root collection
         // added models will cascade down and added to all subCollections

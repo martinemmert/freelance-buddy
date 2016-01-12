@@ -10,7 +10,13 @@
   function $ModelProvider($provide) {
     var suffix = "Model";
 
-    function register(name, factory) {
+    this.$get = ['$injector', function ($injector) {
+      return function (name) {
+        return $injector.get(name + suffix);
+      }
+    }];
+
+    this.register = function (name, factory) {
       if (angular.isObject(name)) {
         var models = {};
         angular.forEach(name, function (model, key) {
@@ -18,52 +24,30 @@
         });
         return models;
       } else {
-        $provide.factory(name + suffix, ['$injector', '$q', '$class', 'ModelRelationBuilder', function ($injector, $q, $class, ModelRelationBuilder) {
+        $provide.factory(name + suffix, ['$injector', '$class', 'ModelRelationBuilder', function ($injector, $class, ModelRelationBuilder) {
           var BaseModel       = $class('BaseModel'),
               modelDefinition = $injector.invoke(factory),
               proto           = {
                 fields: modelDefinition.fields,
                 validation: modelDefinition.validation || {},
-                composed: modelDefinition.composed
+                composed: modelDefinition.composed || {}
               };
 
           if (modelDefinition.hasMany) {
             modelDefinition.hasMany.forEach(function (relation) {
-              proto.composed[relation.compositeField] = {
-                configurable: true,
-                get: ModelRelationBuilder.createHasMany.call(this, relation.compositeField, relation.relation, relation.relationField, relation.relationKey)
-              };
-              proto.composed["$" + relation.compositeField] = {
-                get: function () {
-                  return $q.when(this[modelDefinition.hasMany.compositeField]);
-                }
-              }
+              ModelRelationBuilder.createHasMany(proto.composed, relation.compositeField, relation.relation, relation.relationField, relation.relationKey)
             });
           }
 
           if (modelDefinition.belongsTo) {
             modelDefinition.belongsTo.forEach(function (relation) {
-              proto.composed[relation.compositeField] = {
-                get: ModelRelationBuilder.createBelongsTo.call(this, relation.compositeField, relation.relation, relation.relationField)
-              };
-              proto.composed["$" + relation.compositeField] = {
-                get: function () {
-                  return $q.when(this[relation.compositeField]);
-                }
-              }
+              ModelRelationBuilder.createBelongsTo(proto.composed, relation.compositeField, relation.relation, relation.relationField);
             });
           }
 
           if (modelDefinition.hasOne) {
             modelDefinition.hasOne.forEach(function (relation) {
-              proto.composed[relation.compositeField] = {
-                get: ModelRelationBuilder.createHasOne.call(this, relation.compositeField, relation.relation, relation.relationField)
-              };
-              proto.composed["$" + relation.compositeField] = {
-                get: function () {
-                  return $q.when(this[relation.compositeField]);
-                }
-              }
+              ModelRelationBuilder.createHasOne(proto.composed, relation.compositeField, relation.relation, relation.relationField);
             });
           }
 
@@ -74,15 +58,7 @@
           return BaseModel.extend(modelDefinition.url, proto);
         }]);
       }
-    }
-
-    this.register = register;
-
-    this.$get = ['$injector', function ($injector) {
-      return function (name) {
-        return $injector.get(name + suffix);
-      }
-    }];
+    };
   }
 
 })(angular);
