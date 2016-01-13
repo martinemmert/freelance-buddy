@@ -5,3 +5,12 @@
     <li><a ui-sref="suppliers.delete({supplierId: ctrl.supplierModel.id})">[Delete]</a></li>
   </ul>
 </nav>
+<section>
+  <h1>Spendings</h1>
+  Total: {{ctrl.supplierModel.spendings.grandNetTotal}} / {{ctrl.supplierModel.spendings.grandGrossTotal}}
+  <ul ng-if="ctrl.supplierModel.spendings.length > 0">
+    <li ng-repeat="spending in ctrl.supplierModel.spendings track by spending.tracker">
+      {{spending.comment}} - {{spending.invoiceNumber}} - {{spending.payedOn}} - {{spending.netTotal}} - {{spending.taxValue}} - {{spending.grossTotal}} - {{spending.taxFree}}
+    </li>
+  </ul>
+</section>

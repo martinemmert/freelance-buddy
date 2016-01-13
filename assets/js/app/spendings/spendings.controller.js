@@ -5,26 +5,11 @@
     .module("app.spendings")
     .controller('app.spendings.controller', SpendingsController);
 
-  SpendingsController.$inject = ['$scope', 'SpendingCollection'];
+  SpendingsController.$inject = ['$scope', 'spendingCollection'];
 
-  function SpendingsController($scope, SpendingCollection) {
-
+  function SpendingsController($scope, spendingCollection) {
     var vm = this;
-    vm.spendingCollection = SpendingCollection;
-    vm.spendingCollectionLoaded = SpendingCollection.$isLoaded;
-
-    vm.selectModel = function (model) {
-      vm.selectedModel = model;
-    };
-
-    load();
-
-    function load() {
-      SpendingCollection.$query().then(function () {
-        vm.spendingCollectionLoaded = SpendingCollection.$isLoaded;
-      });
-    }
-
+    vm.spendingCollection = spendingCollection;
   }
 
 })(angular);

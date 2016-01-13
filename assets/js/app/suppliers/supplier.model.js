@@ -7,7 +7,15 @@
       $modelProvider.register('Supplier', function () {
         return {
           url: 'suppliers',
-          fields: ['name']
+          fields: ['name'],
+          hasMany: [
+            {
+              relation: 'Spending',
+              relationField: 'supplierId',
+              relationKey: 'id',
+              compositeField: 'spendings'
+            }
+          ]
         }
       });
     }]);

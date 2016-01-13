@@ -1,0 +1,15 @@
+<div class="spendings-area">
+  <header>
+    <h1>Spendings</h1>
+  </header>
+  <nav>
+    <a ui-sref="spendings.create">Add new Spending</a>
+    <ul ng-if="ctrl.spendingCollection.length > 0">
+      <li ng-repeat="spending in ctrl.spendingCollection track by spending.id">
+        <a ui-sref="spendings.details({spendingId: spending.id})">{{spending.supplier.name}}: {{spending.comment}} {{spending.invoiceNumber}} {{spending.netTotal}} {{spending.taxValue}} {{spending.grossTotal}}</a>
+      </li>
+    </ul>
+  </nav>
+  <article class="spending-detail" ui-view></article>
+</div>
+

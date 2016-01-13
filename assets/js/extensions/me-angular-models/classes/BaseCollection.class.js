@@ -133,6 +133,7 @@
         if (!_self.$isLoaded && !_self.$isLoading) {
           console.log("i start loading");
           _self.$isLoading = true;
+          Object.defineProperty(_self, '_loadingPromise', {configurable: true, writable: true, value: null});
           _self._loadingPromise = BaseModelApi.$query(_self.url).then(function (data) {
             _self.$isLoading = false;
             _self.$isLoaded = true;
@@ -141,9 +142,9 @@
               model.$isLoaded = true;
               model.$isStored = true;
               model.$onDeleted.addOnce(_deleteListener, _self);
-              delete _self._loadingPromise;
               _self.add(model);
             });
+            delete _self._loadingPromise;
             return _self;
           });
           return _self._loadingPromise;
