@@ -2,11 +2,11 @@
   "use strict";
   angular
     .module("app.suppliers")
-    .controller("app.suppliers.supplierEdit.controller", CustomerEditController);
+    .controller("app.suppliers.supplierEdit.controller", SupplierEditController);
 
-  CustomerEditController.$inject = ['$scope', '$state', 'supplierModel'];
+  SupplierEditController.$inject = ['$scope', '$state', 'supplierModel'];
 
-  function CustomerEditController($scope, $state, supplierModel) {
+  function SupplierEditController($scope, $state, supplierModel) {
     var vm = this;
 
     vm.supplierModel = supplierModel;

@@ -2,11 +2,11 @@
   "use strict";
   angular
     .module("app.projects")
-    .controller("app.projects.projectEdit.controller", CustomerEditController);
+    .controller("app.projects.projectEdit.controller", ProjectEditController);
 
-  CustomerEditController.$inject = ['$scope', '$state', 'customerCollection', 'projectModel'];
+  ProjectEditController.$inject = ['$scope', '$state', 'customerCollection', 'projectModel'];
 
-  function CustomerEditController($scope, $state, customerCollection, projectModel) {
+  function ProjectEditController($scope, $state, customerCollection, projectModel) {
     var vm = this;
 
     vm.projectModel = projectModel;
