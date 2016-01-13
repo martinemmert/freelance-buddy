@@ -10,6 +10,11 @@
   <ul ng-if="ctrl.customerModel.projects.length > 0">
     <li ng-repeat="project in ctrl.customerModel.projects track by project.tracker">
       {{project.title}} - {{project.projectNumber}} - {{project.tracker}}
+      <ul ng-if="project.subprojects.length > 0">
+        <li ng-repeat="subproject in project.subprojects track by subproject.tracker">
+          {{subproject.title}} - {{subproject.projectNumber}}
+        </li>
+      </ul>
     </li>
   </ul>
   <p ng-if="ctrl.customerModel.projects.length == 0">This customer has no projects</p>

@@ -4,7 +4,7 @@
   </header>
   <nav>
     <a ui-sref="projects.details.subprojectsCreate">Add new Project</a>
-    <ul>
+    <ul ng-if="ctrl.subprojectCollection.length > 0">
       <li ng-repeat="subproject in ctrl.subprojectCollection track by subproject.id">
         <a ui-sref="projects.details.subprojectDetails({subprojectId: subproject.id})">{{subproject.title}}</a>
       </li>

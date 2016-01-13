@@ -33,6 +33,8 @@
         value: false
       });
 
+      Array.apply(this);
+
     }
 
     BaseCollection.prototype = Object.create(Array.prototype);
@@ -125,25 +127,25 @@
     });
 
     Object.defineProperty(BaseCollection.prototype, '$query', {
+      configurable: true,
       value: function () {
         var _self = this;
         if (!_self.$isLoaded && !_self.$isLoading) {
+          console.log("i start loading");
           _self.$isLoading = true;
-          _self._loadingPromise = BaseModelApi
-            .$query(_self.url)
-            .then(function (data) {
-              _self.$isLoading = false;
-              _self.$isLoaded = true;
-              _.forEach(data, function (rawModel) {
-                var model = new _self.ModelClass(rawModel);
-                model.$isLoaded = true;
-                model.$isStored = true;
-                model.$onDeleted.addOnce(_deleteListener, _self);
-                _self.add(model);
-              });
+          _self._loadingPromise = BaseModelApi.$query(_self.url).then(function (data) {
+            _self.$isLoading = false;
+            _self.$isLoaded = true;
+            _.forEach(data, function (rawModel) {
+              var model = new _self.ModelClass(rawModel);
+              model.$isLoaded = true;
+              model.$isStored = true;
+              model.$onDeleted.addOnce(_deleteListener, _self);
               delete _self._loadingPromise;
-              return _self;
+              _self.add(model);
             });
+            return _self;
+          });
           return _self._loadingPromise;
         } else if (!_self.$isLoaded && _self.$isLoading) {
           return _self._loadingPromise;
@@ -217,6 +219,27 @@
         }
 
         function SubCollectionClass() {
+          parentConstructor.apply(this, arguments);
+
+          Object.defineProperty(this, '$isLoaded', {
+            configurable: true,
+            get: function () {
+              return this.root.$isLoaded;
+            },
+            set: function (value) {
+              this.root.$isLoaded = value;
+            }
+          });
+
+          Object.defineProperty(this, '$isLoading', {
+            configurable: true,
+            get: function () {
+              return this.root.$isLoading;
+            },
+            set: function (value) {
+              this.root.$isLoading = value;
+            }
+          });
         }
 
         SubCollectionClass.prototype = Object.create(parentPrototype);
@@ -229,26 +252,6 @@
         // allow access to the root collection
         // should not be used public, only internal
         if (!this.parent)Object.defineProperty(SubCollectionClass.prototype, 'root', {value: parentCollection});
-
-        Object.defineProperty(SubCollectionClass.prototype, '$isLoaded', {
-          configurable: true,
-          get: function () {
-            return this.root.$isLoaded;
-          },
-          set: function (value) {
-            this.root.$isLoaded = value;
-          }
-        });
-
-        Object.defineProperty(SubCollectionClass.prototype, '$isLoading', {
-          configurable: true,
-          get: function () {
-            return this.root.$isLoading;
-          },
-          set: function (value) {
-            this.root.$isLoading = value;
-          }
-        });
 
         // override the add method to add models directly to the root collection
         // added models will cascade down and added to all subCollections
@@ -268,7 +271,17 @@
           }
         });
 
-        subCollection = new SubCollectionClass(this);
+        Object.defineProperty(SubCollectionClass.prototype, '$query', {
+          configurable: true,
+          value: function () {
+            var _self = this;
+            return this.root.$query().then(function (collection) {
+              return _self;
+            });
+          }
+        });
+
+        subCollection = new SubCollectionClass();
         subCollection.root.registerSubCollection(subCollection);
 
         this.forEach(function (model) {
