@@ -1,0 +1,15 @@
+<div class="incomes-area">
+  <header>
+    <h1>Incomes</h1>
+  </header>
+  <nav>
+    <a ui-sref="incomes.create">Add new Income</a>
+    <ul ng-if="ctrl.incomeCollection.length > 0">
+      <li ng-repeat="income in ctrl.incomeCollection track by income.id">
+        <a ui-sref="incomes.details({incomeId: income.id})">{{income.subproject.project.customer.labelText}} {{income.subproject.project.title}} {{income.subproject.title}} - {{income.comment}} - {{income.invoiceNumber}} - {{income.payedOn}} - {{income.netTotal}} - {{income.taxValue}} - {{income.grossTotal}} - {{income.taxFree}}</a>
+      </li>
+    </ul>
+  </nav>
+  <article class="income-detail" ui-view></article>
+</div>
+

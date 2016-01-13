@@ -1,0 +1,33 @@
+<form name="ctrl.form" ng-submit="ctrl.save()">
+  <fieldset>
+    <legend>Income Form</legend>
+    <label for="income-form-subproject-id">Subproject:</label>
+    <select name="subprojectId" id="income-form-subproject-id" ng-model="ctrl.formData.selectedSubproject" ng-required="true"
+            ng-options="subproject.title for subproject in ctrl.subprojectCollection">
+    </select>
+
+    <label for="income-form-comment">Comment:</label>
+    <input type="text" name="comment" id="income-form-comment" ng-model="ctrl.formData.comment">
+
+    <label for="income-form-invoiceNumber">Invoice Number:</label>
+    <input type="text" name="invoiceNumber" id="income-form-invoiceNumber" ng-model="ctrl.formData.invoiceNumber">
+
+    <label for="income-form-payedOn">Payed On:</label>
+    <input type="date" name="payedOn" id="income-form-payedOn" ng-model="ctrl.formData.payedOn">
+
+    <label for="income-form-netTotal">Net Total:</label>
+    <input type="number" name="netTotal" id="income-form-netTotal" ng-model="ctrl.formData.netTotal" ng-required="true" step="0.01" min="0">
+
+    <label for="income-form-taxValue">Tax Value:</label>
+    <input type="number" name="taxValue" id="income-form-taxValue" ng-model="ctrl.formData.taxValue" step="0.01" min="0" max="1">
+
+    <label for="income-form-grossTotal">Gross Total:</label>
+    <input type="number" name="grossTotal" id="income-form-grossTotal" ng-model="ctrl.incomeModel.grossTotal" ng-disabled="true">
+
+    <label for="income-form-taxFree">Tax Free:</label>
+    <input type="checkbox" name="taxFree" id="income-form-taxFree" ng-model="ctrl.formData.taxFree">
+
+    <input type="submit" value="Save" ng-disabled="ctrl.form.$invalid"/>
+    <input type="button" value="Cancel" ng-click="ctrl.cancel()"/>
+  </fieldset>
+</form>

@@ -13,6 +13,11 @@
       <ul ng-if="project.subprojects.length > 0">
         <li ng-repeat="subproject in project.subprojects track by subproject.tracker">
           {{subproject.title}} - {{subproject.projectNumber}}
+          <ul ng-if="subproject.incomes.length > 0">
+            <li ng-repeat="income in subproject.incomes track by income.tracker">
+              {{income.comment}} - {{income.invoiceNumber}} - {{income.payedOn}} - {{income.netTotal}} - {{income.taxValue}} - {{income.grossTotal}} - {{income.taxFree}}
+            </li>
+          </ul>
         </li>
       </ul>
     </li>

@@ -5,26 +5,11 @@
     .module("app.incomes")
     .controller('app.incomes.controller', IncomesController);
 
-  IncomesController.$inject = ['$scope', 'IncomeCollection'];
+  IncomesController.$inject = ['$scope', 'incomeCollection'];
 
-  function IncomesController($scope, IncomeCollection) {
-
+  function IncomesController($scope, incomeCollection) {
     var vm = this;
-    vm.incomeCollection = IncomeCollection;
-    vm.incomeCollectionLoaded = IncomeCollection.$isLoaded;
-
-    vm.selectModel = function (model) {
-      vm.selectedModel = model;
-    };
-
-    load();
-
-    function load() {
-      IncomeCollection.$query().then(function () {
-        vm.incomeCollectionLoaded = IncomeCollection.$isLoaded;
-      });
-    }
-
+    vm.incomeCollection = incomeCollection;
   }
 
 })(angular);

@@ -15,7 +15,14 @@
               compositeField: 'project'
             }
           ],
-          composed: {}
+          hasMany: [
+            {
+              relation: 'Income',
+              relationField: 'subprojectId',
+              relationKey: 'id',
+              compositeField: 'incomes'
+            }
+          ]
         }
       });
     }]);
