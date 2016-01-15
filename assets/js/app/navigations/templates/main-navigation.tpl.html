@@ -1,0 +1,5 @@
+<ul class="navigation-element-list">
+  <li ng-repeat="state in ctrl.states track by $index" ui-sref-active="--current" class="navigation-element">
+    <a ui-sref="{{state.name}}" class="navigation-element-link">{{state.name}}</a>
+  </li>
+</ul>

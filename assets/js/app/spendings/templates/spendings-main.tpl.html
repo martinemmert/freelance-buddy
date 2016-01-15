@@ -1,15 +1,42 @@
-<div class="spendings-area">
-  <header>
-    <h1>Spendings</h1>
-  </header>
-  <nav>
-    <a ui-sref="spendings.create">Add new Spending</a>
-    <ul ng-if="ctrl.spendingCollection.length > 0">
-      <li ng-repeat="spending in ctrl.spendingCollection track by spending.id">
-        <a ui-sref="spendings.details({spendingId: spending.id})">{{spending.supplier.name}}: {{spending.comment}} {{spending.invoiceNumber}} {{spending.netTotal}} {{spending.taxValue}} {{spending.grossTotal}}</a>
-      </li>
-    </ul>
-  </nav>
-  <article class="spending-detail" ui-view></article>
-</div>
+<header class="top-bar">
+  <div class="row">
+    <div class="column section-action-bar">
+      <a ui-sref="spendings.create" ui-sref-active="--active" class="button">+</a>
 
+      <div class="spacer-20"></div>
+      <h1 section-title class="section-title"></h1>
+    </div>
+  </div>
+</header>
+<section class="row spending-list">
+  <div class="column">
+    <table class="transaction-table" ng-if="ctrl.spendingCollection.length > 0" cellpadding="0" cellspacing="0">
+      <thead>
+      <tr>
+        <th>payed on</th>
+        <th>invoice no.</th>
+        <th>supplier</th>
+        <th class="text-align-right">net</th>
+        <th class="text-align-center">rate</th>
+        <th class="text-align-right">taxes</th>
+        <th class="text-align-right">gross</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="spending in ctrl.spendingCollection track by spending.id" ng-dblclick="ctrl.openDetails({spendingId: spending.id})">
+        <td class="payed-on">{{spending.payedOn | date}}</td>
+        <td class="invoice-number">{{spending.invoiceNumber}}</td>
+        <td class="customer-project">
+          {{spending.supplier.name}}
+          <br ng-if="spending.comment"><small class="light-text">{{spending.comment}}</small>
+        </td>
+        <td class="text-align-right sum">{{spending.netTotal | number:2}}</td>
+        <td class="text-align-center sum">{{spending.taxValue}}</td>
+        <td class="text-align-right sum">{{spending.taxTotal | number:2}}</td>
+        <td class="text-align-right sum sum-total">{{spending.grossTotal | number:2}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<ui-view></ui-view>

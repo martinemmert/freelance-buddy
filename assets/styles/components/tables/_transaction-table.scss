@@ -1,0 +1,43 @@
+.transaction-table {
+  @include size(100% auto);
+  border: none;
+
+  th, td {
+    @include padding(.4em .5em);
+    &:first-child {
+      @include padding(null .5em null .4em);
+    }
+    &:last-child {
+      @include padding(null .4em null .5em);
+    }
+  }
+
+  tr.--selected {
+    background-color: lighten($color-emerald, 49);
+  }
+
+  th {
+    text-align: left;
+    font-weight: normal;
+  }
+
+  td {
+    vertical-align: top;
+    border-top: 1px dotted $color-silver;
+  }
+
+  .sum {
+    color: $color-asbestos;
+    vertical-align: middle;
+  }
+
+  .tax {
+    color: $color-concrete;
+  }
+
+  .sum-total {
+    font-size: 2em;
+    color: $default-text-color;
+  }
+
+}

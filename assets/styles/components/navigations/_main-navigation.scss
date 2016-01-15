@@ -1,0 +1,56 @@
+@mixin top-line($color) {
+  &:before {
+    display: block;
+    @include position(absolute, 0 0 null 0);
+    @include size(100% 3px);
+    background-color: $color;
+    content: "";
+  }
+}
+
+.main-navigation {
+  @include position(fixed, 0 0 auto 0);
+  @include size(100% $main-navigation-height);
+  @include top-line($color-silver);
+  @include serif-font;
+  background-color: $color-clouds;
+  z-index: $z-index-main-navigation;
+
+
+  .navigation-element-list {
+    @include no-list-style();
+    @include display(flex);
+    @include align-items(center);
+    @include flex-direction(row);
+    @include justify-content(center);
+  }
+
+  .navigation-element {
+    @include flex(0 1 content);
+    color: $color-asbestos;
+
+    .navigation-element-link {
+      display: block;
+      position: relative;
+      line-height: $main-navigation-height;
+      height: $main-navigation-height;
+      @include padding(null 1em);
+      @include no-link-style;
+
+      &:hover {
+        color: $color-nephritis;
+      }
+    }
+
+    &.--current .navigation-element-link {
+      @include top-line(currentColor);
+      color: $color-nephritis;
+      cursor: default;
+
+      &:hover {
+        color: $color-nephritis;
+      }
+    }
+
+  }
+}

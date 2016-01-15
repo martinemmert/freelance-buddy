@@ -86,16 +86,15 @@
         var _self = this, needle = _.find(_self, {id: parseInt(id)});
         if (!needle) {
           var model = new _self.ModelClass({id: id});
-          model.promise = model.$load(id);
-          model.promise.then(function (loadedModel) {
-            delete model.promise;
-            return loadedModel;
-          });
-          model.promise.finally(function () {
-            if (!model.$isLoaded) {
-              model.$onDeleted.dispatch(model);
-            }
-          });
+          model.promise = model.$load(id)
+            .then(function (loadedModel) {
+              delete model.promise;
+              return loadedModel;
+            }).finally(function () {
+              if (!model.$isLoaded) {
+                model.$onDeleted.dispatch(model);
+              }
+            });
           model.$onDeleted.addOnce(_deleteListener, _self);
           _self.push(model);
           return model.promise;

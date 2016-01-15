@@ -13,6 +13,7 @@
     vm.formData = {};
     vm.spendingModel = spendingModel;
     vm.supplierCollection = supplierCollection;
+    vm.title = $state.current.data && $state.current.data.title ? $state.current.data.title : '- no title -';
 
     if (spendingModel.$isStored) {
       supplierCollection.get(spendingModel.supplierId).then(function (model) {
@@ -26,6 +27,8 @@
       vm.formData.taxFree = spendingModel.taxFree;
     } else {
       vm.formData.selectedSupplier = null;
+      vm.formData.netTotal = 0;
+      vm.formData.taxValue = 0;
     }
 
     vm.save = function () {
@@ -37,16 +40,20 @@
       vm.spendingModel.taxValue = vm.formData.taxValue;
       vm.spendingModel.taxFree = vm.formData.taxFree;
       vm.spendingModel.$save().then(function (model) {
-        $state.go('^.details', {spendingId: model.id});
+        vm.cancel();
       });
     };
 
     vm.cancel = function () {
-      if (vm.spendingModel.$isStored) {
-        $state.go('^.details', {spendingId: vm.spendingModel.id});
-      } else {
-        $state.go('^');
-      }
+      $state.go('spendings');
+    };
+
+    vm.getTaxTotal = function () {
+      return vm.formData.netTotal * vm.formData.taxValue;
+    };
+
+    vm.getGrossTotal = function () {
+      return vm.formData.netTotal * vm.formData.taxTotal;
     };
   }
 

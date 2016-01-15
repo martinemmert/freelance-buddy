@@ -9,16 +9,25 @@
   function SpendingDeleteController($scope, $state, spendingModel) {
     var vm = this;
     vm.spendingModel = spendingModel;
+
     vm.delete = function () {
       vm.spendingModel.$delete().then(function () {
         vm.spendingModel = null;
-        $state.go('^');
+        $state.go('^.^');
       });
     };
 
+    vm.tryDelete = function () {
+      $scope.showDeleteOptions = true;
+    };
+
     vm.cancel = function () {
-      $state.go("^.details", {spendingId: vm.spendingModel.id});
-    }
+      $scope.showDeleteOptions = false;
+    };
+
+    // make this visible
+    $scope.deleteVisible = true;
+    $scope.showDeleteOptions = false;
   }
 
 })(angular);

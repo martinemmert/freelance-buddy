@@ -1,0 +1,32 @@
+h1, h2, h3, h4, h5, h6 {
+  text-rendering: optimizeLegibility;
+}
+
+small {
+  font-size: .75em;
+}
+
+.light-text {
+  color: $color-asbestos;
+}
+
+.text-align-right {
+  text-align: right !important;
+}
+
+.text-align-center {
+  text-align: center !important;
+}
+
+.text-align-left {
+  text-align: left !important;
+}
+
+hr {
+  display: block;
+  @include margin(1em 0 0 0);
+  @include padding(0 0 1em 0);
+  height: 1px;
+  border: none;
+  border-top: 1px dotted $color-silver;
+}

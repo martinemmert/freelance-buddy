@@ -1,0 +1,17 @@
+html {
+  font-size: $body-font-size;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  line-height: $default-line-height;
+  @include serif-font;
+  @include prefixer(font-smoothing, antialiased, webkit moz spec);
+}
+
+* {
+  box-sizing: border-box;
+}

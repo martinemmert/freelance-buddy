@@ -1,0 +1,16 @@
+.modal {
+  @include position(fixed, 0 0 0 0);
+  @include justify-content(center);
+  @include align-items(top);
+  @include padding(0 20px 20px);
+  max-width: none;
+  background: rgba($color-concrete, .75);
+  z-index: $z-index-modal;
+
+
+  .modal-content {
+    @include margin(4 + $top-bar-height + $main-navigation-height 0 0 0);
+    background: $color-white;
+    padding: 0.5rem 1.5rem 1.5rem;
+  }
+}

@@ -1,15 +1,19 @@
-<div class="customers-area">
-  <header>
-    <h1>Customers</h1>
-  </header>
-  <nav>
-    <a ui-sref="customers.create">Add new Customer</a>
-    <ul>
-      <li ng-repeat="customer in ctrl.customersCollection track by customer.id">
-        <a ui-sref="customers.details({customerId: customer.id})">{{customer.labelText}}</a>
-      </li>
-    </ul>
-  </nav>
-  <article class="customer-detail" ui-view="customers.content"></article>
-</div>
+<header class="top-bar">
+  <div class="row">
+    <div class="column section-action-bar">
+      <a ui-sref="customers.create" ui-sref-active="--active" class="button">+</a>
+
+      <div class="spacer-20"></div>
+      <h1 section-title class="section-title"></h1>
+    </div>
+  </div>
+</header>
+<nav>
+  <ul>
+    <li ng-repeat="customer in ctrl.customersCollection track by customer.id">
+      <a ui-sref="customers.details({customerId: customer.id})">{{customer.labelText}}</a>
+    </li>
+  </ul>
+</nav>
+<article class="customer-detail" ui-view="customers.content"></article>
 

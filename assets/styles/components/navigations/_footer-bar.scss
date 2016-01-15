@@ -1,0 +1,7 @@
+.footer-bar {
+  @include position(absolute, null 0 0 0);
+  @include size(100% $footer-bar-height);
+  text-align: center;
+  line-height: $footer-bar-height;
+  color: $color-asbestos;
+}

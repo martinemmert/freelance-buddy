@@ -1,0 +1,23 @@
+@mixin no-list-style() {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin no-link-style() {
+  text-decoration: none;
+  &:active,
+  &:hover,
+  &:visited,
+  &:focus {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+@mixin no-heading-style() {
+  font-weight: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  @include margin(0);
+}

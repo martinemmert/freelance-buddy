@@ -1,0 +1,60 @@
+.button {
+  @include prefixer(appearance, none, webkit);
+  @include size(auto 2em);
+  @include serif-font;
+  @include margin(0);
+  @include padding(0 1em);
+  display: inline-block;
+  border: 0;
+  font-size: 1rem;
+  line-height: $default-line-height;
+  background: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover:not(:disabled) {
+    color: $color-nephritis;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: $color-silver !important;
+    background-color: $color-clouds !important;
+    &:hover {
+      background-color: $color-clouds !important;
+    }
+  }
+
+  &.--primary {
+    background-color: $color-nephritis;
+    color: $color-white;
+    &:hover {
+      color: $color-white;
+      background-color: lighten($color-nephritis, 3);
+    }
+  }
+
+  &.--danger {
+    background-color: $color-alizarin;
+    color: $color-white;
+    &:hover {
+      color: $color-white;
+      background-color: lighten($color-alizarin, 3);
+    }
+  }
+
+  &.--ghost {
+    color: $color-nephritis;
+    border: 1px solid $color-silver;
+    &:hover {
+      border-color: currentColor;
+    }
+  }
+
+  &.--mid {
+    width: 12em;
+  }
+}

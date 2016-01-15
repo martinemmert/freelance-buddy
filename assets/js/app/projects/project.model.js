@@ -22,7 +22,14 @@
               relationKey: 'id',
               compositeField: 'subprojects'
             }
-          ]
+          ],
+          composed: {
+            'labelText': {
+              get: function () {
+                return this.projectNumber + "-" + this.title;
+              }
+            }
+          }
         }
       });
     }]);

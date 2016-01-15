@@ -13,6 +13,8 @@
     vm.formData = {};
     vm.incomeModel = incomeModel;
     vm.subprojectCollection = subprojectCollection;
+    vm.title = $state.current.data && $state.current.data.title ? $state.current.data.title : '- no title -';
+
 
     if (incomeModel.$isStored) {
       subprojectCollection.get(incomeModel.subprojectId).then(function (model) {
@@ -26,6 +28,8 @@
       vm.formData.taxFree = incomeModel.taxFree;
     } else {
       vm.formData.selectedSupplier = null;
+      vm.formData.netTotal = 0;
+      vm.formData.taxValue = 0;
     }
 
     vm.save = function () {
@@ -37,16 +41,20 @@
       vm.incomeModel.taxValue = vm.formData.taxValue;
       vm.incomeModel.taxFree = vm.formData.taxFree;
       vm.incomeModel.$save().then(function (model) {
-        $state.go('^.details', {incomeId: model.id});
+        vm.cancel();
       });
     };
 
     vm.cancel = function () {
-      if (vm.incomeModel.$isStored) {
-        $state.go('^.details', {incomeId: vm.incomeModel.id});
-      } else {
-        $state.go('^');
-      }
+      $state.go('incomes');
+    };
+
+    vm.getTaxTotal = function () {
+      return vm.formData.netTotal * vm.formData.taxValue;
+    };
+
+    vm.getGrossTotal = function () {
+      return vm.formData.netTotal * vm.formData.taxTotal;
     };
   }
 

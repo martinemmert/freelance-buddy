@@ -1,15 +1,19 @@
-<div class="suppliers-area">
-  <header>
-    <h1>Suppliers</h1>
-  </header>
-  <nav>
-    <a ui-sref="suppliers.create">Add new Supplier</a>
-    <ul>
-      <li ng-repeat="supplier in ctrl.supplierCollection track by supplier.id">
-        <a ui-sref="suppliers.details({supplierId: supplier.id})">{{supplier.name}}</a>
-      </li>
-    </ul>
-  </nav>
-  <article class="supplier-detail" ui-view="suppliers.content"></article>
-</div>
+<header class="top-bar">
+  <div class="row">
+    <div class="column section-action-bar">
+      <a ui-sref="suppliers.create" ui-sref-active="--active" class="button">+</a>
+
+      <div class="spacer-20"></div>
+      <h1 section-title class="section-title"></h1>
+    </div>
+  </div>
+</header>
+<nav>
+  <ul>
+    <li ng-repeat="supplier in ctrl.supplierCollection track by supplier.id">
+      <a ui-sref="suppliers.details({supplierId: supplier.id})">{{supplier.name}}</a>
+    </li>
+  </ul>
+</nav>
+<article class="supplier-detail" ui-view="suppliers.content"></article>
 

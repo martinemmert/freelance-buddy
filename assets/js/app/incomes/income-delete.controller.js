@@ -9,16 +9,25 @@
   function IncomeDeleteController($scope, $state, incomeModel) {
     var vm = this;
     vm.incomeModel = incomeModel;
+
     vm.delete = function () {
       vm.incomeModel.$delete().then(function () {
         vm.incomeModel = null;
-        $state.go('^');
+        $state.go('^.^');
       });
     };
 
+    vm.tryDelete = function () {
+      $scope.showDeleteOptions = true;
+    };
+
     vm.cancel = function () {
-      $state.go("^.details", {incomeId: vm.incomeModel.id});
-    }
+      $scope.showDeleteOptions = false;
+    };
+
+    // make this visible
+    $scope.deleteVisible = true;
+    $scope.showDeleteOptions = false;
   }
 
 })(angular);

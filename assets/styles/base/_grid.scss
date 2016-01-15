@@ -1,0 +1,20 @@
+.row {
+  @include display(flex);
+  @include align-items(flex-start);
+  @include flex-direction(row);
+  @include justify-content(flex-start);
+  @include padding(null $grid-padding);
+  @include margin(null auto);
+  max-width: $grid-max-width;
+
+  .row {
+    @include padding(null 0);
+  }
+
+  .column {
+    @include flex(1 1 100%);
+    max-width: $grid-max-width - $grid-padding * 2;
+  }
+}
+
+

@@ -21,9 +21,14 @@
                 return this.payedOn && _.isDate(this.payedOn) ? this.payedOn.getTime() < Date.now() : false;
               }
             },
+            'taxTotal': {
+              get: function () {
+                return this.netTotal * this.taxValue;
+              }
+            },
             'grossTotal': {
               get: function () {
-                return this.netTotal * this.taxValue + this.netTotal;
+                return this.taxTotal + this.netTotal;
               }
             }
           }

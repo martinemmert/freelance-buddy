@@ -1,0 +1,97 @@
+.form {
+  label {
+    display: inline-block;
+    @include size(auto 2rem);
+    font-size: .8rem;
+    line-height: 2rem;
+    vertical-align: top;
+  }
+
+  #{$all-text-inputs}, select {
+    display: inline-block;
+    @include size(100% 2rem);
+    @include margin(0);
+    @include padding(0 .2rem);
+    @include serif-font;
+    border: none;
+    border-bottom: 1px solid $color-silver;
+    font-size: 1rem;
+    background: none;
+
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid $color-nephritis;
+    }
+
+    &:disabled {
+      color: currentColor;
+    }
+  }
+
+  select {
+    @include prefixer(appearance, none, webkit);
+    border-radius: 0;
+  }
+
+  .form-control-group {
+    @include display(flex);
+    @include flex-direction(row);
+    @include justify-content(flex-start);
+    @include margin(0 0 2rem 0);
+    &:last-child {
+      @include margin(0 0 0 0);
+      .form-control {
+        @include margin(null null 0 null);
+      }
+    }
+
+    &.--centered {
+      @include justify-content(center);
+      .form-control {
+        @include flex(0 0 auto);
+      }
+    }
+  }
+
+  .control-label {
+    @include flex(0 0 12em);
+  }
+
+  .form-control {
+    @include flex(1 1 100%);
+    position: relative;
+    margin-bottom: .8rem;
+
+    &:not(:first-of-type) {
+      @include margin(0 0 .8rem 2rem);
+    }
+
+    &.--disabled {
+      color: $color-concrete;
+    }
+  }
+
+  .form-control-suffix {
+    @include display(block);
+    @include position(absolute, 0 0 0 null);
+    @include size(2rem 2rem);
+    @include padding(null .2rem null null);
+    text-align: right;
+    line-height: 2rem;
+    color: currentColor;
+
+    & + input {
+      @include padding(null 2.2rem null .2rem);
+    }
+  }
+
+  .form-control-hint {
+    @include position(absolute, null null -.8rem .1rem);
+    display: block;
+    height: auto;
+    line-height: 1;
+    font-size: .6rem;
+    color: $color-asbestos;
+  }
+
+}

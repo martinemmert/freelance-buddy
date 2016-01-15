@@ -24,6 +24,14 @@ module.exports = function(grunt) {
 				dest: '.tmp/public'
 			}]
 		},
+    styles: {
+      files: [{
+        expand: true,
+        cwd: './assets/styles',
+        src: ['**/*.(css|map)'],
+        dest: '.tmp/public/styles'
+      }]
+    },
 		build: {
 			files: [{
 				expand: true,

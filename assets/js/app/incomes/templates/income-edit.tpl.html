@@ -1,33 +1,45 @@
-<form name="ctrl.form" ng-submit="ctrl.save()">
-  <fieldset>
-    <legend>Income Form</legend>
-    <label for="income-form-subproject-id">Subproject:</label>
-    <select name="subprojectId" id="income-form-subproject-id" ng-model="ctrl.formData.selectedSubproject" ng-required="true"
-            ng-options="subproject.title for subproject in ctrl.subprojectCollection">
-    </select>
+<div class="row modal">
+  <div class="column modal-content">
+    <h1>{{ctrl.title}}</h1>
+    <hr/>
+    <form class="form" name="ctrl.form" ng-submit="ctrl.save()">
+      <div class="form-control-group">
+        <label class="control-label" for="income-form-subproject-id">Customer & Project:</label>
+        <fc-select class="form-control" fc-name="subprojectId" fc-model="ctrl.formData.selectedSubproject" fc-collection="ctrl.subprojectCollection" fc-options="item.project.title + ' - ' + item.title group by item.project.customer.labelText for item in ctrl.fcCollection"></fc-select>
+      </div>
 
-    <label for="income-form-comment">Comment:</label>
-    <input type="text" name="comment" id="income-form-comment" ng-model="ctrl.formData.comment">
+      <div class="form-control-group">
+        <label class="control-label">Details:</label>
 
-    <label for="income-form-invoiceNumber">Invoice Number:</label>
-    <input type="text" name="invoiceNumber" id="income-form-invoiceNumber" ng-model="ctrl.formData.invoiceNumber">
+        <fc-text-input class="form-control" fc-form="ctrl.form" fc-type="date" fc-name="payedOn" fc-label="Payed On" fc-model="ctrl.formData.payedOn"></fc-text-input>
 
-    <label for="income-form-payedOn">Payed On:</label>
-    <input type="date" name="payedOn" id="income-form-payedOn" ng-model="ctrl.formData.payedOn">
+        <fc-text-input class="form-control" fc-form="ctrl.form" fc-type="text" fc-name="invoiceNumber" fc-label="Invoice Number" fc-model="ctrl.formData.invoiceNumber"></fc-text-input>
+      </div>
 
-    <label for="income-form-netTotal">Net Total:</label>
-    <input type="number" name="netTotal" id="income-form-netTotal" ng-model="ctrl.formData.netTotal" ng-required="true" step="0.01" min="0">
+      <div class="form-control-group">
+        <label class="control-label" for="form-control-input-netTotal">Total:</label>
 
-    <label for="income-form-taxValue">Tax Value:</label>
-    <input type="number" name="taxValue" id="income-form-taxValue" ng-model="ctrl.formData.taxValue" step="0.01" min="0" max="1">
+        <fc-text-input class="form-control" fc-form="ctrl.form" fc-type="number" fc-name="netTotal" fc-label="Net Total" fc-suffix="€" fc-model="ctrl.formData.netTotal" fc-extra-attr="{step: '0.01', min: 0}"></fc-text-input>
+        <fc-text-input class="form-control" fc-form="ctrl.form" fc-type="number" fc-name="taxValue" fc-label="Tax Rate" fc-suffix="%" fc-model="ctrl.formData.taxValue" fc-extra-attr="{step: '1', min: 0}"></fc-text-input>
+        <fc-text-input class="form-control --disabled" fc-form="ctrl.form" fc-type="number" fc-name="grossTotal" fc-label="Gross Total" fc-suffix="€" fc-model="ctrl.formData.netTotal + ctrl.formData.netTotal * (ctrl.formData.taxValue / 100)" fc-extra-prop="{disabled:true}"></fc-text-input>
+        <fc-text-input class="form-control --disabled" fc-form="ctrl.form" fc-type="number" fc-name="taxTotal" fc-label="Tax Total" fc-suffix="€" fc-model="ctrl.formData.netTotal * (ctrl.formData.taxValue / 100)" fc-extra-prop="{disabled:true}"></fc-text-input>
+      </div>
 
-    <label for="income-form-grossTotal">Gross Total:</label>
-    <input type="number" name="grossTotal" id="income-form-grossTotal" ng-model="ctrl.incomeModel.grossTotal" ng-disabled="true">
+      <div class="form-control-group">
+        <label class="control-label" for="form-control-input-comment">Note:</label>
 
-    <label for="income-form-taxFree">Tax Free:</label>
-    <input type="checkbox" name="taxFree" id="income-form-taxFree" ng-model="ctrl.formData.taxFree">
+        <fc-text-input class="form-control" fc-form="ctrl.form" fc-type="text" fc-name="comment" fc-label="Note" fc-model="ctrl.formData.comment"></fc-text-input>
+      </div>
 
-    <input type="submit" value="Save" ng-disabled="ctrl.form.$invalid"/>
-    <input type="button" value="Cancel" ng-click="ctrl.cancel()"/>
-  </fieldset>
-</form>
+      <div class="form-control-group --centered">
+        <div class="form-control text-align-right">
+          <input class="button --primary --mid" type="submit" value="Save" ng-disabled="ctrl.form.$invalid"/>
+        </div>
+        <div ui-view="delete" class="form-control text-align-center" ng-style="{display: deleteVisible == true ? 'block' : 'none', 'min-width': '12em'}"></div>
+        <div class="form-control">
+          <input class="button --ghost --mid" type="button" value="Cancel" ng-click="ctrl.cancel()"/>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

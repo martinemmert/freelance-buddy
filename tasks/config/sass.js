@@ -1,7 +1,20 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+
+  var loadPaths    = [],
+      bourbonPaths = require('bourbon').includePaths;
+
+  loadPaths = loadPaths.concat(bourbonPaths);
 
   grunt.config.set('sass', {
+    options: {
+      includePaths: loadPaths,
+      sourceMap: true
+    },
     dev: {
+      options: {
+        lineNumbers: true,
+        outputStyle: "expanded"
+      },
       files: [{
         expand: true,
         cwd: 'assets/styles/',
@@ -12,5 +25,5 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-sass');
 };

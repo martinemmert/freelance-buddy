@@ -1,0 +1,9 @@
+.main-content-area-container {
+  position: relative;
+  min-height: 100vh;
+  @include margin(0);
+  @include padding($main-navigation-height 0 $footer-bar-height 0);
+}
+
+.main-content-area {
+}

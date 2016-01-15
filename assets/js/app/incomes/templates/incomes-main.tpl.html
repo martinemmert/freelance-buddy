@@ -1,15 +1,42 @@
-<div class="incomes-area">
-  <header>
-    <h1>Incomes</h1>
-  </header>
-  <nav>
-    <a ui-sref="incomes.create">Add new Income</a>
-    <ul ng-if="ctrl.incomeCollection.length > 0">
-      <li ng-repeat="income in ctrl.incomeCollection track by income.id">
-        <a ui-sref="incomes.details({incomeId: income.id})">{{income.subproject.project.customer.labelText}} {{income.subproject.project.title}} {{income.subproject.title}} - {{income.comment}} - {{income.invoiceNumber}} - {{income.payedOn}} - {{income.netTotal}} - {{income.taxValue}} - {{income.grossTotal}} - {{income.taxFree}}</a>
-      </li>
-    </ul>
-  </nav>
-  <article class="income-detail" ui-view></article>
-</div>
-
+<header class="top-bar">
+  <div class="row">
+    <div class="column section-action-bar">
+      <a ui-sref="incomes.create" ui-sref-active="--active" class="button">+</a>
+      <div class="spacer-20"></div>
+      <h1 section-title class="section-title"></h1>
+    </div>
+  </div>
+</header>
+<section class="row income-list">
+  <div class="column">
+    <table class="transaction-table" ng-if="ctrl.incomeCollection.length > 0" cellpadding="0" cellspacing="0">
+      <thead>
+      <tr>
+        <th>payed on</th>
+        <th>invoice no.</th>
+        <th>customer & project</th>
+        <th class="text-align-right">net</th>
+        <th class="text-align-center">rate</th>
+        <th class="text-align-right">taxes</th>
+        <th class="text-align-right">gross</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="income in ctrl.incomeCollection track by income.id" ng-dblclick="ctrl.openDetails({incomeId: income.id})">
+        <td class="payed-on">{{income.payedOn | date}}</td>
+        <td class="invoice-number">{{income.invoiceNumber}}</td>
+        <td class="customer-project">
+          {{income.subproject.project.customer.labelText}}
+          <br><small>{{income.subproject.project.labelText}} - {{income.subproject.labelText}}</small>
+          <br ng-if="income.comment"><small class="light-text">{{income.comment}}</small>
+        </td>
+        <td class="text-align-right sum">{{income.netTotal | number:2}}</td>
+        <td class="text-align-center sum">{{income.taxValue}}</td>
+        <td class="text-align-right sum">{{income.taxTotal | number:2}}</td>
+        <td class="text-align-right sum sum-total">{{income.grossTotal | number:2}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<ui-view></ui-view>

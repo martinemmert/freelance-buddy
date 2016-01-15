@@ -1,5 +1,4 @@
-<h1>{{ctrl.incomeModel.comment}}</h1>
-<section>
-  <h1>Delete?</h1>
+<input ng-if="!showDeleteOptions" class="button --danger --mid" type="button" value="Delete" ng-click="ctrl.tryDelete()"/>
+<div ng-if="showDeleteOptions">
   <a ng-click="ctrl.delete()">YES</a> | <a ng-click="ctrl.cancel()">NO</a>
-</section>
+</div>

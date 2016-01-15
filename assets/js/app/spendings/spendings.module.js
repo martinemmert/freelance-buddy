@@ -16,54 +16,57 @@
         templateUrl: TEMPLATE_PATH + 'spendings-main.tpl.html',
         controller: 'app.spendings.controller as ctrl',
         resolve: {
-          spendingCollection: ['SpendingCollection', function (SpendingCollection) {
-            return SpendingCollection.$query();
-          }],
           supplierCollection: ['SupplierCollection', function (SupplierCollection) {
             return SupplierCollection.$query();
+          }],
+          spendingCollection: ['SpendingCollection', function (SpendingCollection) {
+            return SpendingCollection.$query();
           }]
         }
       })
-      .state("spendings.create", {
+      .state('spendings.create', {
         url: '/create',
+        data: {
+          title: 'Add new Spending'
+        },
         resolve: {
           spendingModel: ["spendingCollection", function (spendingCollection) {
             return spendingCollection.$new();
           }]
         },
-        templateUrl: TEMPLATE_PATH + "spending-edit.tpl.html",
-        controller: 'app.spendings.spendingEdit.controller as ctrl'
+        views: {
+          '@spendings': {
+            templateUrl: TEMPLATE_PATH + "spending-edit.tpl.html",
+            controller: 'app.spendings.spendingEdit.controller as ctrl'
+          }
+        }
       })
-      .state("spendings.edit", {
-        url: '/edit/:spendingId',
+      .state('spendings.spending', {
+        abstract: true,
+        url: '/:spendingId',
         resolve: {
           spendingModel: ['$stateParams', 'spendingCollection', function ($stateParams, spendingCollection) {
             return spendingCollection.get($stateParams.spendingId);
           }]
-        },
-        templateUrl: TEMPLATE_PATH + "spending-edit.tpl.html",
-        controller: 'app.spendings.spendingEdit.controller as ctrl'
+        }
       })
-      .state("spendings.details", {
-        url: "/details/:spendingId",
-        resolve: {
-          spendingModel: ['$stateParams', 'spendingCollection', function ($stateParams, spendingCollection) {
-            return spendingCollection.get($stateParams.spendingId);
-          }]
+      .state("spendings.spending.edit", {
+        url: '/edit',
+        data: {
+          title: 'Edit Spending'
         },
-        templateUrl: TEMPLATE_PATH + "spending-details.tpl.html",
-        controller: 'app.spendings.spendingDetails.controller as ctrl'
+        views: {
+          '@spendings': {
+            templateUrl: TEMPLATE_PATH + "spending-edit.tpl.html",
+            controller: 'app.spendings.spendingEdit.controller as ctrl'
+          },
+          'delete@spendings.spending.edit': {
+            templateUrl: TEMPLATE_PATH + "spending-delete.tpl.html",
+            controller: 'app.spendings.spendingDelete.controller as ctrl'
+          }
+        }
       })
-      .state("spendings.delete", {
-        url: '/delete/:spendingId',
-        resolve: {
-          spendingModel: ['$stateParams', 'spendingCollection', function ($stateParams, spendingCollection) {
-            return spendingCollection.get($stateParams.spendingId);
-          }]
-        },
-        templateUrl: TEMPLATE_PATH + "spending-delete.tpl.html",
-        controller: 'app.spendings.spendingDelete.controller as ctrl'
-      })
+
   }
 
 })(angular);

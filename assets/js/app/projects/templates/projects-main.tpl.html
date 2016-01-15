@@ -1,15 +1,19 @@
-<div class="projects-area">
-  <header>
-    <h1>Projects</h1>
-  </header>
-  <nav>
-    <a ui-sref="projects.create">Add new Project</a>
-    <ul>
-      <li ng-repeat="project in ctrl.projectCollection track by project.id">
-        <a ui-sref="projects.details({projectId: project.id})">{{project.title}}</a>
-      </li>
-    </ul>
-  </nav>
-  <article class="project-detail" ui-view></article>
-</div>
+<header class="top-bar">
+  <div class="row">
+    <div class="column section-action-bar">
+      <a ui-sref="projects.create" ui-sref-active="--active" class="button">+</a>
+
+      <div class="spacer-20"></div>
+      <h1 section-title class="section-title"></h1>
+    </div>
+  </div>
+</header>
+<nav>
+  <ul>
+    <li ng-repeat="project in ctrl.projectCollection track by project.id">
+      <a ui-sref="projects.details({projectId: project.id})">{{project.title}}</a>
+    </li>
+  </ul>
+</nav>
+<article class="project-detail" ui-view></article>
 

@@ -9,40 +9,20 @@
   <!--STYLES-->
   <link rel="stylesheet" href="/styles/importer.css">
   <!--STYLES END-->
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
-<div class="app-wrapper" ng-app="app">
-  <header class="top-bar">
-    <h1>Freelance Buddy</h1>
-  </header>
-  <nav>
-    <ul class="main-navigation">
-      <li class="main-navigation--element">
-        <a ui-sref="customers" ui-sref-active="active" class="main-navigation--element--link">Customers</a>
-      </li>
-      <li class="main-navigation--element">
-        <a ui-sref="suppliers" ui-sref-active="active" class="main-navigation--element--link">Suppliers</a>
-      </li>
-      <li class="main-navigation--element">
-        <a ui-sref="projects" ui-sref-active="active" class="main-navigation--element--link">Projects</a>
-      </li>
-      <li class="main-navigation--element">
-        <a ui-sref="spendings" ui-sref-active="active" class="main-navigation--element--link">Spendings</a>
-      </li>
-      <li class="main-navigation--element">
-        <a ui-sref="incomes" ui-sref-active="active" class="main-navigation--element--link">Incomes</a>
-      </li>
-    </ul>
-  </nav>
+<div class="application-wrapper" ng-app="app">
+  <nav main-navigation class="main-navigation"></nav>
   <div class="main-content-area-container">
     <main class="main-content-area" ui-view>
       <!-- content will be rendered here -->
     </main>
+    <footer class="footer-bar">
+      <small>&copy; Martin Emmert 2016, Freelance Buddy v.0.2</small>
+    </footer>
   </div>
-  <footer class="footer-bar">
-    <small>&copy; Martin Emmert 2016, Freelance Buddy v.0.2</small>
-  </footer>
 </div>
 <!--
     Client-side Templates
@@ -89,9 +69,10 @@
 <script src="/js/extensions/me-angular-models/classes/BaseModelApi.class.js"></script>
 <script src="/js/app/customers/customers.module.js"></script>
 <script src="/js/app/incomes/incomes.module.js"></script>
+<script src="/js/app/navigations/navigations.module.js"></script>
 <script src="/js/app/projects/projects.module.js"></script>
+<script src="/js/app/shared/shared.module.js"></script>
 <script src="/js/app/spendings/spendings.module.js"></script>
-<script src="/js/app/subprojects/subprojects.module.js"></script>
 <script src="/js/app/suppliers/suppliers.module.js"></script>
 <script src="/js/app/customers/customer-delete.controller.js"></script>
 <script src="/js/app/customers/customer-details.controller.js"></script>
@@ -102,13 +83,10 @@
 <script src="/js/app/incomes/income-delete.controller.js"></script>
 <script src="/js/app/incomes/income-details.controller.js"></script>
 <script src="/js/app/incomes/income-edit.controller.js"></script>
-<script src="/js/app/incomes/income-form.directive.js"></script>
 <script src="/js/app/incomes/income.collection.js"></script>
 <script src="/js/app/incomes/income.model.js"></script>
 <script src="/js/app/incomes/incomes.controller.js"></script>
-<script src="/js/app/incomes/spending-delete.controller.js"></script>
-<script src="/js/app/incomes/spending-details.controller.js"></script>
-<script src="/js/app/incomes/spending-edit.controller.js"></script>
+<script src="/js/app/navigations/main-navigation.directive.js"></script>
 <script src="/js/app/projects/project-delete.controller.js"></script>
 <script src="/js/app/projects/project-details.controller.js"></script>
 <script src="/js/app/projects/project-edit.controller.js"></script>
@@ -121,18 +99,16 @@
 <script src="/js/app/projects/subproject.collection.js"></script>
 <script src="/js/app/projects/subproject.model.js"></script>
 <script src="/js/app/projects/subprojects.controller.js"></script>
+<script src="/js/app/shared/form-control-input.directive.js"></script>
+<script src="/js/app/shared/form-control-select.directive.js"></script>
+<script src="/js/app/shared/form-control-text-input.directive.js"></script>
+<script src="/js/app/shared/section-title.directive.js"></script>
 <script src="/js/app/spendings/spending-delete.controller.js"></script>
 <script src="/js/app/spendings/spending-details.controller.js"></script>
 <script src="/js/app/spendings/spending-edit.controller.js"></script>
-<script src="/js/app/spendings/spending-form.directive.js"></script>
 <script src="/js/app/spendings/spending.collection.js"></script>
 <script src="/js/app/spendings/spending.model.js"></script>
-<script src="/js/app/spendings/spendings-delete.controller.js"></script>
 <script src="/js/app/spendings/spendings.controller.js"></script>
-<script src="/js/app/subprojects/subproject-form.directive.js"></script>
-<script src="/js/app/subprojects/subproject.collection.js"></script>
-<script src="/js/app/subprojects/subproject.model.js"></script>
-<script src="/js/app/subprojects/subprojects.controller.js"></script>
 <script src="/js/app/suppliers/supplier-delete.controller.js"></script>
 <script src="/js/app/suppliers/supplier-details.controller.js"></script>
 <script src="/js/app/suppliers/supplier-edit.controller.js"></script>

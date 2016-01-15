@@ -1,0 +1,34 @@
+.section-action-bar {
+  @include display(flex);
+  @include align-items(stretch);
+  @include flex-direction(row);
+  @include justify-content(flex-start);
+
+  &.--left {
+    @include justify-content(flex-end);
+  }
+
+  .button {
+    @include no-link-style;
+    display: block;
+    @include size(auto $top-bar-height);
+    @include padding(null .9em);
+
+    font-size: $top-bar-height * .45;
+    line-height: $top-bar-height;
+
+    background-color: darken($color-nephritis, 3);
+    &:hover {
+      background-color: lighten($color-nephritis, 3);
+    }
+    &.--active  {
+      color: $color-nephritis;
+      background-color: $color-white;
+    }
+  }
+
+  .spacer-20 {
+    display: block;
+    width: rem(20px);
+  }
+}

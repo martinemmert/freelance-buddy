@@ -1,0 +1,14 @@
+.top-bar {
+  height: $top-bar-height;
+  line-height: $top-bar-height;
+  background-color: $color-nephritis;
+  color: $color-clouds;
+  font-size: $top-bar-height * 0.45;
+  @include bold-serif-font;
+
+  .section-title {
+    @include no-heading-style;
+  }
+}
+
+
